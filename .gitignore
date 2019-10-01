@@ -1,3 +1,9 @@
+..*.*
+ft_nm
+ft_otool
+ft_printf/
+libft/
+
 # Prerequisites
 *.d
 
