@@ -10,20 +10,55 @@
 
 void        macho_64_symtab(void *ptr, struct symtab_command *symtab)
 {
-    uint32_t    nb_sym_tab;
-    void        *p;
+    uint32_t			nb_sym_tab;
+	char				*sorted_array;
+	struct nlist_64		*list;
 
     nb_sym_tab = symtab->nsyms;
     ft_printf("nb symbole table %d\n", nb_sym_tab);
-    p = ptr;
-    p += symtab->symoff;
+
+	list = (strut nlist_64*)(ptr + symtab->symoff);
+
+	sorted_array = malloc(nb_sym_tab);
+	int i = nb_sym_tab;
+	while (i)
+	{
+		sorted_array[i] = nb_sym_tab - i;
+		--i;
+	}
+	int min;
+	i = nb_sym_tab;
+	while (i)
+	{
+		min = i;
+		int j = nb_sym_tab;
+		while (j)
+		{
+			if (ft_strcmp(list[min].n_un.n_strx, list[j].n_un.n_strx) > 0)
+			{
+				min = j
+			}
+
+			if (min != i)
+			{
+				int tmp = sorted_array[min];
+				sorted_array[min] = sorted_array[i];
+				sorted_array[i] = tmp;
+			}
+			--j;
+		}
+		--i;
+	}
+
     while (nb_sym_tab)
     {
-        ft_printf("%0.8x%0.8x %s\n", ((struct nlist_64*)p)->n_value >> 32, ((struct nlist_64*)p)->n_value,
-            ptr + symtab->stroff + ((struct nlist_64*)p)->n_un.n_strx);
-        p += sizeof(struct nlist_64);
+        ft_printf("%0.8x%0.8x %s\n",
+				list[sorted_array[nb_sym_tab]].n_value >> 32,
+				list[sorted_array[nb_sym_tab]].n_value,
+            	(void*)list + list[nb_sym_tab].n_un.n_strx);
         --nb_sym_tab;
     }
+	free(sorted_array);
 }
 
 void        macho_64(void *ptr)
