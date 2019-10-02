@@ -7,36 +7,44 @@
 #include <sys/mman.h>
 #include <mach-o/loader.h>
 #include <mach-o/nlist.h>
+#include <mach-o/fat.h>
+#include <ar.h>
+#include "common.h"
+
 
 void        macho_64_symtab(void *ptr, struct symtab_command *symtab)
 {
     uint32_t			nb_sym_tab;
-	char				*sorted_array;
+	uint32_t 		    *sorted_array;
 	struct nlist_64		*list;
 
     nb_sym_tab = symtab->nsyms;
     ft_printf("nb symbole table %d\n", nb_sym_tab);
 
-	list = (strut nlist_64*)(ptr + symtab->symoff);
+	list = (struct nlist_64*)(ptr + symtab->symoff);
 
-	sorted_array = malloc(nb_sym_tab);
-	int i = nb_sym_tab;
-	while (i)
+	sorted_array = malloc(sizeof(uint32_t) * nb_sym_tab);
+	uint32_t i = 0;
+	while (i < nb_sym_tab)
 	{
-		sorted_array[i] = nb_sym_tab - i;
-		--i;
+		sorted_array[i] = i;
+		++i;
 	}
-	int min;
-	i = nb_sym_tab;
-	while (i)
+    
+    /*
+	uint32_t min;
+	i = 0;
+	while (i < nb_sym_tab)
 	{
 		min = i;
-		int j = nb_sym_tab;
-		while (j)
+		uint32_t j = 0;
+		while (j < nb_sym_tab)
 		{
-			if (ft_strcmp(list[min].n_un.n_strx, list[j].n_un.n_strx) > 0)
+			if (ft_strcmp(
+                    ptr + symtab->stroff + list[min].n_un.n_strx,
+                    ptr + symtab->stroff + list[j].n_un.n_strx) < 0)
 			{
-				min = j
+				min = j;
 			}
 
 			if (min != i)
@@ -45,17 +53,18 @@ void        macho_64_symtab(void *ptr, struct symtab_command *symtab)
 				sorted_array[min] = sorted_array[i];
 				sorted_array[i] = tmp;
 			}
-			--j;
+			++j;
 		}
-		--i;
+		++i;
 	}
+    */
 
     while (nb_sym_tab)
     {
         ft_printf("%0.8x%0.8x %s\n",
 				list[sorted_array[nb_sym_tab]].n_value >> 32,
 				list[sorted_array[nb_sym_tab]].n_value,
-            	(void*)list + list[nb_sym_tab].n_un.n_strx);
+            	ptr + symtab->stroff + list[sorted_array[nb_sym_tab]].n_un.n_strx);
         --nb_sym_tab;
     }
 	free(sorted_array);
@@ -87,39 +96,35 @@ void        nm(void *ptr)
     // test magic number
     if (*(unsigned int*)ptr == MH_MAGIC_64)
         macho_64(ptr);
+    
+    if (*(unsigned int*)ptr == MH_CIGAM)
+        ft_printf("macho-32 inv");
+
+    if (*(unsigned int*)ptr == MH_CIGAM_64)
+        ft_printf("macho-64 inv");
+        //macho_64(ptr);
+    
+    if (*(unsigned int*)ptr == MH_MAGIC)
+        ft_printf("macho-32");
+    
+    if (*(unsigned int*)ptr == FAT_MAGIC)
+        ft_printf("fat-32");
+
+    if (*(unsigned int*)ptr == FAT_MAGIC_64)
+        ft_printf("fat-64");
+
+    if (*(unsigned int*)ptr == FAT_CIGAM)
+        ft_printf("fat-32 inv");
+
+    if (*(unsigned int*)ptr == FAT_CIGAM_64)
+        ft_printf("fat-64 inv");
+
+    if (ft_strncmp((char*)ptr, ARMAG, SARMAG) == 0)
+        ft_printf("arch");
 }
 
 int         main(int argc, char **argv)
 {
-    int         fd;
-    void        *ptr;
-    struct stat buf;
 
-    if (argc < 2)
-    {
-        ft_printf("a mach-o file is needed\n");
-        return (1);
-    }
-    if ((fd = open(argv[1], O_RDONLY)) < 0)
-    {
-        ft_printf("can't open %s\n", argv[1]);
-        return (1);
-    }
-    if (fstat(fd, &buf) < 0)
-    {
-        ft_printf("can't get info on %s\n", argv[1]);
-        return (1);
-    }
-    if ((ptr = mmap(0, buf.st_size, PROT_READ, MAP_PRIVATE, fd, 0)) == MAP_FAILED)
-    {
-        ft_printf("can't read %s\n", argv[1]);
-        return (1);
-    }
-    nm(ptr);
-    if (munmap(ptr, buf.st_size) < 0)
-    {
-        ft_printf("can't desalocate memory mapping of %s\n", argv[1]);
-        return (1);
-    }
     return (0);
 }
