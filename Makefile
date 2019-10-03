@@ -6,7 +6,7 @@
 #    By: Pierre <Pierre@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/11 13:59:37 by pierre            #+#    #+#              #
-#    Updated: 2019/10/01 17:36:36 by Pierre           ###   ########.fr        #
+#    Updated: 2019/10/03 15:33:55 by Pierre           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,16 +31,29 @@ LIB_FLAGS = -L$(LIB_PRINTF_PATH) -l$(LIB_PRINTF_LINK) -L$(LIB_PATH) -l$(LIB_LINK
 			
 INC_FILE = common.h \
 
-SRC_FILE =  \
+SRC_DIR_NM = nm/
+SRC_DIR_COM = common/
+SRC_DIR_OTOOL = otool/
 
-SRC_NM = $(SRC_DIR)nm/main.c
-SRC_OTOOL = $(SRC_DIR)otool/main.c
+SRC_FILE_COM = open.c \
+
+SRC_FILE_NM = main.c \
+		 macho.c \
+		 magic.c \
+		 print.c \
+		 sort.c \
+
+SRC_FILE_OTOOL = main.c \
+
+SRC_NM = $(addprefix $(SRC_DIR), $(addprefix $(SRC_DIR_NM), $(SRC_FILE_NM)))
+SRC_OTOOL = $(addprefix $(SRC_DIR), $(addprefix $(SRC_DIR_OTOOL), $(SRC_FILE_OTOOL)))
+SRC_COM = $(addprefix $(SRC_DIR), $(addprefix $(SRC_DIR_COM), $(SRC_FILE_COM)))
+
+OBJ_COM = $(SRC_COM:.c=.o)
 OBJ_NM = $(SRC_NM:.c=.o)
 OBJ_OTOOL = $(SRC_OTOOL:.c=.o)
 
-SRC = $(addprefix $(SRC_DIR), $(SRC_FILE))
 INC = $(addprefix $(INC_DIR), $(INC_FILE))
-OBJ = $(SRC:.c=.o)
 
 all		: $(LIB) $(LIB_PRINTF) $(NAME_NM) $(NAME_OTOOL)
 
@@ -50,20 +63,20 @@ $(LIB)	:
 $(LIB_PRINTF)	:
 	make -C $(LIB_PRINTF_PATH)
 
-$(OBJ_NM): $(SRC_NM) $(INC)
-	     $(CC) $(CFLAGS) -o $@ -c $<
-
-$(OBJ_OTOOL): $(SRC_OTOOL) $(INC)
-	     $(CC) $(CFLAGS) -o $@ -c $<
+#$(OBJ_NM): $(SRC_NM) $(INC)
+#	     $(CC) $(CFLAGS) -o $@ -c $<
+#
+#$(OBJ_OTOOL): $(SRC_OTOOL) $(INC)
+#	     $(CC) $(CFLAGS) -o $@ -c $<
 
 %.o: %.c $(INC)
 	     $(CC) $(CFLAGS) -o $@ -c $<
 
-$(NAME_NM)	: $(OBJ) $(OBJ_NM)
-	$(CC) -o $(NAME_NM) $(CFLAGS) $(OBJ) $(OBJ_NM) $(LIB_FLAGS)
+$(NAME_NM)	: $(OBJ_COM) $(OBJ_NM)
+	$(CC) -o $(NAME_NM) $(CFLAGS) $(OBJ) $(OBJ_COM) $(OBJ_NM) $(LIB_FLAGS)
 
-$(NAME_OTOOL)	: $(OBJ) $(OBJ_OTOOL)
-	$(CC) -o $(NAME_OTOOL) $(CFLAGS) $(OBJ) $(OBJ_OTOOL) $(LIB_FLAGS)
+$(NAME_OTOOL)	: $(OBJ_COM) $(OBJ_OTOOL)
+	$(CC) -o $(NAME_OTOOL) $(CFLAGS) $(OBJ) $(OBJ_COM) $(OBJ_OTOOL) $(LIB_FLAGS)
 
 clean	:
 	rm -f $(OBJ) $(OBJ_NM) $(OBJ_OTOOL)

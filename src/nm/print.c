@@ -1,24 +1,53 @@
 #include <mach-o/nlist.h>
+#include <ft_printf.h>
 
-void            nm_print_64(struct nlist_64 *list, uint32_t *sorted_array, uint32_t nb_symb, uint32_t stroff)
+char            type_char_64(struct nlist_64 *list)
 {
-    while (nb_symb)
+    if (list->n_type & N_TYPE == N_UNDF)
+        return 'U';
+    if (list->n_type & N_TYPE == N_ABS)
+        return 'A';
+    if (list->n_type & N_TYPE == N_PBUD)
+        return 'S';
+    if (list->n_type & N_TYPE == N_INDR)
+        return 'I';
+    if (list->n_type & N_TYPE == N_SECT)
     {
-        ft_printf("%0.8x%0.8x %s\n",
-                  list[sorted_array[nb_symb]].n_value >> 32,
-                  list[sorted_array[nb_symb]].n_value,
-                  stroff + list[sorted_array[nb_symb]].n_un.n_strx);
-        --nb_symb;
+        
+    }
+    return 'S';
+}
+
+void            nm_print_64(struct nlist_64 *list, uint32_t *sorted_array, uint32_t nb_symb, void *stroff)
+{
+    uint32_t         i;
+
+    i = 0;
+    while (i < nb_symb)
+    {
+        if (list[sorted_array[i]].n_value)
+            ft_printf("%0.8x%0.8x %c %s\n",
+                      list[sorted_array[i]].n_value >> 32,
+                      list[sorted_array[i]].n_value,
+                      stroff + list[sorted_array[i]].n_un.n_strx);
+        else
+            ft_printf("%16c %c %s\n",
+                      ' ',
+                      stroff + list[sorted_array[i]].n_un.n_strx);
+        ++i;
     }
 }
 
-void            nm_print_32(struct nlist *list, uint32_t *sorted_array, uint32_t nb_symb, uint32_t stroff)
+void            nm_print_32(struct nlist *list, uint32_t *sorted_array, uint32_t nb_symb, void *stroff)
 {
-    while (nb_symb)
+    uint32_t         i;
+
+    i = 0;
+    while (i < nb_symb)
     {
         ft_printf("%0.8x %s\n",
-                  list[sorted_array[nb_symb]].n_value,
-                  stroff + list[sorted_array[nb_symb]].n_un.n_strx);
-        --nb_symb;
+                  list[sorted_array[i]].n_value,
+                  stroff + list[sorted_array[i]].n_un.n_strx);
+        ++i;
     }
 }

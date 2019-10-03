@@ -1,6 +1,8 @@
 #include <mach-o/loader.h>
 #include <mach-o/nlist.h>
 #include <stdlib.h>
+#include <ft_printf.h>
+#include "common.h"
 
 void        nm_macho(void *ptr, int b_swap, int b_64bit)
 {
@@ -16,33 +18,40 @@ void        nm_macho(void *ptr, int b_swap, int b_64bit)
     {
         if (((struct load_command*)p)->cmd == LC_SYMTAB)
         {
-            macho_symtab(ptr, (struct symtab_command*)p, b_swap, b_64bit);
+            nm_macho_symtab(ptr, (struct symtab_command*)p, b_swap, b_64bit);
         }
         p += ((struct load_command*)p)->cmdsize;
         --nb_load_cmd;
     }
 }
 
-void        macho_64_symtab(void *ptr, struct symtab_command *symtab, int b_swap, int b_64bit)
+void        nm_macho_symtab(void *ptr, struct symtab_command *symtab, int b_swap, int b_64bit)
 {
-    uint32_t			i;
 	uint32_t 		    *sorted_array;
 
     ft_printf("nb symbole table %d\n", symtab->nsyms);
-	sorted_array = malloc(sizeof(uint32_t) * symtab->nsyms);
-	i = 0;
-	while (i++ < symtab->nsyms)
-		sorted_array[i] = i;
-    // sort sorted_array with string sumbol
+    sorted_array = malloc(sizeof(uint32_t) * symtab->nsyms);
+    sort_array(sorted_array,
+               ptr + symtab->stroff,
+               (struct nlist_64 *)(ptr + symtab->symoff),
+               symtab->nsyms);
+    if (b_swap)
+    {
+        // Swap n_list
+    }
     if (b_64bit)
-        nm_print_64((struct nlist_64*)(ptr + symtab->symoff),
-            sorted_array,
-            symtab->nsyms,
-            ptr + symtab->stroff);
+    {
+        nm_print_64((struct nlist_64 *)(ptr + symtab->symoff),
+                    sorted_array,
+                    symtab->nsyms,
+                    ptr + symtab->stroff);
+    }
     else
-        nm_print_32((struct nlist*)(ptr + symtab->symoff),
-            sorted_array,
-            symtab->nsyms,
-            ptr + symtab->stroff);
-	free(sorted_array);
+    {
+        nm_print_32((struct nlist *)(ptr + symtab->symoff),
+                    sorted_array,
+                    symtab->nsyms,
+                    ptr + symtab->stroff);
+    }
+    free(sorted_array);
 }

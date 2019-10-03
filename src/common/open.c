@@ -2,13 +2,16 @@
 #include <sys/mman.h>
 #include <sys/stat.h>
 #include <unistd.h>
+#include <ft_printf.h>
+#include "common.h"
 
-void        *open_file(char *path, void **ptr)
+int         open_file(char *path, void (*run)(void*, char*))
 {
-    int     fd;
+    int         fd;
     struct stat buf;
+    void        *ptr;
 
-    if (path && (fd = open(path, O_RDONLY)) < 0)
+    if (!path || (fd = open(path, O_RDONLY)) < 0)
     {
         ft_printf("can't open %s\n", path);
         return (1);
@@ -18,15 +21,17 @@ void        *open_file(char *path, void **ptr)
         ft_printf("can't get info on %s\n", path);
         return (1);
     }
-    if ((*ptr = mmap(0, buf.st_size, PROT_READ, MAP_PRIVATE, fd, 0)) == MAP_FAILED)
+    if ((ptr = mmap(0, buf.st_size, PROT_READ, MAP_PRIVATE, fd, 0)) == MAP_FAILED)
     {
         ft_printf("can't read %s\n", path);
         return (1);
     }
-    return (0);
+    if (run)
+        run(ptr, path);
+    return (free_file(fd, ptr, buf.st_size, path));
 }
 
-void        *free_file(int fd, void *ptr, size_t size, char *path)
+int         free_file(int fd, void *ptr, size_t size, char *path)
 {
     if (munmap(ptr, size) < 0)
     {
