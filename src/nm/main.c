@@ -10,6 +10,8 @@ int         main(int argc, char **argv)
     ret = 0;
     while (i < argc)
     {
+        if (argc > 2)
+            ft_printf("\n%s:\n", argv[i]);
         if (open_file(argv[i], &nm_magic))
             ret = EXIT_FAILLURE;
         i++;

@@ -5,7 +5,7 @@
 #include <ft_printf.h>
 #include "common.h"
 
-int         open_file(char *path, void (*run)(void*, char*))
+int         open_file(char *path, void (*run)(void*))
 {
     int         fd;
     struct stat buf;
@@ -27,7 +27,7 @@ int         open_file(char *path, void (*run)(void*, char*))
         return (1);
     }
     if (run)
-        run(ptr, path);
+        run(ptr);
     return (free_file(fd, ptr, buf.st_size, path));
 }
 

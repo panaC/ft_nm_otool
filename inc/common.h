@@ -5,16 +5,36 @@
 # include <mach-o/loader.h>
 # include <mach-o/nlist.h>
 
+typedef     enum
+{
+  undef = -1,
+  false,
+  true,
+}           t_boo;
+
+typedef     union 
+{
+  struct nlist    b32;
+  struct nlist_64 b64;
+}           t_nlist;
+
+
+# define GET(un) s_b64(undef) ? un.b64 : un.b32
+# define GET_NL(p) GET((t_nlist)p)
+
 /*
 ** common/
 */
-int         open_file(char *path, void (*run)(void*, char*));
+int         open_file(char *path, void (*run)(void*));
 int         free_file(int fd, void *ptr, size_t size, char *path);
+
+int         s_swap(t_boo state);
+int         s_b64(t_boo state);
 
 /*
 ** nm/
 */
-void        nm_magic(void *ptr, char *path);
+void        nm_magic(void *ptr);
 
 void        nm_macho(void *ptr, int b_swap, int b_64bit);
 void        nm_macho_symtab(void *ptr, struct symtab_command *symtab, int b_swap, int b_64bit);

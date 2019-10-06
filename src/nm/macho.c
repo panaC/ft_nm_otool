@@ -11,7 +11,7 @@ void        nm_macho(void *ptr, int b_swap, int b_64bit)
     void        *p;
 
     nb_load_cmd = b_64bit ? ((struct mach_header_64*)ptr)->ncmds : ((struct mach_header_64*)ptr)->ncmds;
-    ft_printf("nb of load cmd %d\n", nb_load_cmd);
+    // ft_printf("nb of load cmd %d\n", nb_load_cmd);
     p = ptr;
     p += b_64bit ? sizeof(struct mach_header_64) : sizeof(struct mach_header);
     while (nb_load_cmd)
@@ -29,7 +29,7 @@ void        nm_macho_symtab(void *ptr, struct symtab_command *symtab, int b_swap
 {
 	uint32_t 		    *sorted_array;
 
-    ft_printf("nb symbole table %d\n", symtab->nsyms);
+    // ft_printf("nb symbole table %d\n", symtab->nsyms);
     sorted_array = malloc(sizeof(uint32_t) * symtab->nsyms);
     sort_array(sorted_array,
                ptr + symtab->stroff,
