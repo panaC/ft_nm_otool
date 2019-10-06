@@ -17,7 +17,7 @@ int       s_b64(t_boo state)
   if (state != undef)
   {
     value = state;
-    ft_printf("b64:%d", value);
+    // ft_printf("b64:%d\n", value);
   }
   return (value);
 }
