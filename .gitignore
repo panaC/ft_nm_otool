@@ -1,7 +1,6 @@
 .DS_Store
 _*
 
-**/*.o
 .*.*
 ft_nm
 ft_otool
