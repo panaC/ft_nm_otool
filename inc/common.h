@@ -27,7 +27,7 @@ typedef     union
 
 # define GE(U) ((s_b64(undef)) ? (U->b64) : (U->b32))
 # define GET(U, M) ((s_b64(undef)) ? (U->b64.M) : (U->b32.M))
-# define GEI(U, I) (t_nlist*)((s_b64(undef)) ? ((void*)(U.b64 + I)) : ((void*)(U.b32 + I))
+# define GEI(U, I) (t_nlist*)((s_b64(undef)) ? ((void*)(U.b64 + I)) : ((void*)(U.b32 + I)))
 # define GETI(U, I, M) ((s_b64(undef)) ? (U.b64[I].M) : (U.b32[I].M))
 
 /*
