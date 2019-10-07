@@ -25,22 +25,17 @@ static t_boo		is_64bit(uint32_t m)
 			|| m == FAT_CIGAM_64);
 }
 
-static void			nm_magic_macho(void *ptr)
-{
-	if (*(uint32_t *)ptr == MH_MAGIC_64)
-		nm_macho(ptr);
-	if (*(uint32_t *)ptr == MH_CIGAM_64)
-		nm_macho(ptr);
-	if (*(uint32_t *)ptr == MH_MAGIC)
-		nm_macho(ptr);
-	if (*(uint32_t *)ptr == MH_CIGAM)
-		nm_macho(ptr);
-}
-
-void				nm_magic(void *ptr)
+int					nm_magic(void *ptr)
 {
 	s_b64(is_64bit(*(uint32_t *)ptr));
-	nm_magic_macho(ptr);
+	if (*(uint32_t *)ptr == MH_MAGIC_64)
+		return (nm_macho(ptr));
+	if (*(uint32_t *)ptr == MH_CIGAM_64)
+		return (nm_macho(ptr));
+	if (*(uint32_t *)ptr == MH_MAGIC)
+		return (nm_macho(ptr));
+	if (*(uint32_t *)ptr == MH_CIGAM)
+		return (nm_macho(ptr));
 	if (*(uint32_t *)ptr == FAT_MAGIC)
 		ft_printf("fat-32");
 	if (*(uint32_t *)ptr == FAT_MAGIC_64)
@@ -51,4 +46,5 @@ void				nm_magic(void *ptr)
 		ft_printf("fat-64 inv");
 	if (ft_strncmp((char *)ptr, ARMAG, SARMAG) == 0)
 		ft_printf("arch");
+	return (0);
 }

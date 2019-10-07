@@ -17,21 +17,23 @@
 #include "common.h"
 
 
-void		nm_macho(void *ptr)
+int			nm_macho(void *ptr)
 {
 	uint32_t	size_mh;
 
 	size_mh = s_b64(UN) ? sizeof(struct mach_header_64)
 		: sizeof(struct mach_header);
 	if (SIZE(ptr, ptr + size_mh + sizeof(struct load_command)))
-	{
 		nm_macho_lc(ptr, (struct load_command*)(ptr + size_mh));
-	}
 	else
+	{
 		ft_printf("truncated or malformed object (mach_header)\n");
+		return (EXIT_FAILURE);
+	}
+	return (0);
 }
 
-void		nm_macho_lc(void *ptr, struct load_command *lc)
+int			nm_macho_lc(void *ptr, struct load_command *lc)
 {
 	uint32_t	nb_load_cmd;
 
@@ -50,24 +52,28 @@ void		nm_macho_lc(void *ptr, struct load_command *lc)
 		else
 		{
 			ft_printf("truncated or malformed object (load_command)\n");
-			break;
+			return (EXIT_FAILURE);
 		}
 	}
+	return (0);
 }
 
-void		nm_macho_symtab(void *ptr, struct symtab_command *symtab)
+int			nm_macho_symtab(void *ptr, struct symtab_command *symtab)
 {
 	uint32_t	*sorted_array;
+	int			ret;
 
 	// ft_printf("nb symbole table %d\n", symtab->nsyms);
-	sorted_array = malloc(sizeof(uint32_t) * symtab->nsyms);
+	if ((sorted_array = malloc(sizeof(uint32_t) * symtab->nsyms)) == NULL)
+		return (EXIT_FAILURE);
 	sort_array(sorted_array,
 			ptr + symtab->stroff,
 			(struct nlist_64 *)(ptr + symtab->symoff),
 			symtab->nsyms);
-	nm_print((t_nlist_p)(struct nlist*)(ptr + symtab->symoff),
+	ret = nm_print((t_nlist_p)(struct nlist*)(ptr + symtab->symoff),
 			sorted_array,
 			symtab->nsyms,
 			ptr + symtab->stroff);
 	free(sorted_array);
+	return (ret);
 }

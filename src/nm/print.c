@@ -32,7 +32,7 @@ char			type_char(t_nlist *list)
 	return ('S');
 }
 
-void			nm_print(t_nlist_p list, uint32_t *sorted_array,
+int				nm_print(t_nlist_p list, uint32_t *sorted_array,
 		uint32_t nb_symb, void *stroff)
 {
 	uint32_t	i;
@@ -40,6 +40,8 @@ void			nm_print(t_nlist_p list, uint32_t *sorted_array,
 	i = 0;
 	while (i < nb_symb)
 	{
+
+		// needed ptr to calcul size
 		if (GETI(list, sorted_array[i], n_value))
 			ft_printf("%0.8x%0.8x %c %s\n",
 					GETI(list, sorted_array[i], n_value) >> 32,
@@ -53,4 +55,5 @@ void			nm_print(t_nlist_p list, uint32_t *sorted_array,
 					GETI(stroff + list, sorted_array[i], n_un.n_strx));
 		++i;
 	}
+	return (0);
 }

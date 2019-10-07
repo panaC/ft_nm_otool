@@ -42,5 +42,5 @@ int			s_size(int size)
 	{
 		value = size;
 	}
-	return (size);
+	return (value);
 }

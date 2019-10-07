@@ -52,8 +52,7 @@ typedef t_nlist*		t_n;
 /*
 ** common/
 */
-int						open_file(char *path, void (*run)(void*));
-int						free_file(int fd, void *ptr, size_t size, char *path);
+int						open_file(char *path, int (*run)(void*));
 
 int						s_swap(t_boo state);
 int						s_b64(t_boo state);
@@ -62,14 +61,14 @@ int						s_size(int size);
 /*
 ** nm/
 */
-void					nm_magic(void *ptr);
+int						nm_magic(void *ptr);
 
-void					nm_macho(void *ptr);
-void					nm_macho_lc(void *ptr, struct load_command *lc);
-void					nm_macho_symtab(void *ptr,
+int						nm_macho(void *ptr);
+int						nm_macho_lc(void *ptr, struct load_command *lc);
+int						nm_macho_symtab(void *ptr,
 							struct symtab_command *symtab);
 
-void					nm_print(t_nlist_p list, uint32_t *sorted_array,
+int						nm_print(t_nlist_p list, uint32_t *sorted_array,
 							uint32_t nb_symb, void *stroff);
 
 void					sort_array(uint32_t *array, void *off,
