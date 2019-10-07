@@ -16,30 +16,46 @@
 #include <ft_printf.h>
 #include "common.h"
 
-void		nm_macho(void *ptr, int b_swap, int b_64bit)
+
+void		nm_macho(void *ptr)
+{
+	uint32_t	size_mh;
+
+	size_mh = s_b64(UN) ? sizeof(struct mach_header_64)
+		: sizeof(struct mach_header);
+	if (SIZE(ptr, ptr + size_mh + sizeof(struct load_command)))
+	{
+		nm_macho_lc(ptr, (struct load_command*)(ptr + size_mh));
+	}
+	else
+		ft_printf("truncated or malformed object (mach_header)\n");
+}
+
+void		nm_macho_lc(void *ptr, struct load_command *lc)
 {
 	uint32_t	nb_load_cmd;
-	void		*p;
 
-	nb_load_cmd = b_64bit ?
+	nb_load_cmd = s_b64(UN) ?
 		((struct mach_header_64*)ptr)->ncmds :
-		((struct mach_header_64*)ptr)->ncmds;
+		((struct mach_header*)ptr)->ncmds;
 	// ft_printf("nb of load cmd %d\n", nb_load_cmd);
-	p = ptr;
-	p += b_64bit ? sizeof(struct mach_header_64) : sizeof(struct mach_header);
-	while (nb_load_cmd)
+	while (nb_load_cmd--)
 	{
-		if (((struct load_command*)p)->cmd == LC_SYMTAB)
+		if (SIZE(ptr, (void*)lc + lc->cmdsize))
 		{
-			nm_macho_symtab(ptr, (struct symtab_command*)p, b_swap, b_64bit);
+			if (lc->cmd == LC_SYMTAB)
+				nm_macho_symtab(ptr, (struct symtab_command*)lc);
+			lc = (struct load_command*)((void*)lc + lc->cmdsize);
 		}
-		p += ((struct load_command*)p)->cmdsize;
-		--nb_load_cmd;
+		else
+		{
+			ft_printf("truncated or malformed object (load_command)\n");
+			break;
+		}
 	}
 }
 
-void		nm_macho_symtab(void *ptr, struct symtab_command *symtab,
-		int b_swap, int b_64bit)
+void		nm_macho_symtab(void *ptr, struct symtab_command *symtab)
 {
 	uint32_t	*sorted_array;
 
@@ -49,14 +65,6 @@ void		nm_macho_symtab(void *ptr, struct symtab_command *symtab,
 			ptr + symtab->stroff,
 			(struct nlist_64 *)(ptr + symtab->symoff),
 			symtab->nsyms);
-	if (b_swap)
-	{
-		// Swap n_list
-	}
-	if (b_64bit)
-	{
-		// 64b n_list
-	}
 	nm_print((t_nlist_p)(struct nlist*)(ptr + symtab->symoff),
 			sorted_array,
 			symtab->nsyms,

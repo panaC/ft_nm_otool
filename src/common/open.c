@@ -33,6 +33,7 @@ int				open_file(char *path, void (*run)(void*))
 		ft_printf("can't get info on %s\n", path);
 		return (1);
 	}
+	s_size(buf.st_size);
 	if ((ptr = mmap(0, buf.st_size, PROT_READ, MAP_PRIVATE, fd, 0))
 			== MAP_FAILED)
 	{

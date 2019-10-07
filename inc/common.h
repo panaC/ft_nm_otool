@@ -19,6 +19,8 @@
 
 # define EXIT_FAILLURE	1
 
+# define ABS(A)			((A < 0) ? (A * -1) : A)
+# define SIZE(A, B)		(ABS((int)(B - A)) <= s_size(UN))
 # define GE(U)			((s_b64(UN)) ? (U->b64) : (U->b32))
 # define GET(U, M)		((s_b64(UN)) ? (U->b64.M) : (U->b32.M))
 # define GEI(U, I)		(t_n)(s_b64(UN) ? (t_v)(U.b64 + I) : (t_v)(U.b32 + I))
@@ -55,16 +57,17 @@ int						free_file(int fd, void *ptr, size_t size, char *path);
 
 int						s_swap(t_boo state);
 int						s_b64(t_boo state);
+int						s_size(int size);
 
 /*
 ** nm/
 */
 void					nm_magic(void *ptr);
 
-void					nm_macho(void *ptr, int b_swap, int b_64bit);
+void					nm_macho(void *ptr);
+void					nm_macho_lc(void *ptr, struct load_command *lc);
 void					nm_macho_symtab(void *ptr,
-							struct symtab_command *symtab, int b_swap,
-							int b_64bit);
+							struct symtab_command *symtab);
 
 void					nm_print(t_nlist_p list, uint32_t *sorted_array,
 							uint32_t nb_symb, void *stroff);

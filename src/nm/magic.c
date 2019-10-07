@@ -28,13 +28,13 @@ static t_boo		is_64bit(uint32_t m)
 static void			nm_magic_macho(void *ptr)
 {
 	if (*(uint32_t *)ptr == MH_MAGIC_64)
-		nm_macho(ptr, 0, 1);
+		nm_macho(ptr);
 	if (*(uint32_t *)ptr == MH_CIGAM_64)
-		nm_macho(ptr, 1, 1);
+		nm_macho(ptr);
 	if (*(uint32_t *)ptr == MH_MAGIC)
-		nm_macho(ptr, 0, 0);
+		nm_macho(ptr);
 	if (*(uint32_t *)ptr == MH_CIGAM)
-		nm_macho(ptr, 1, 0);
+		nm_macho(ptr);
 }
 
 void				nm_magic(void *ptr)

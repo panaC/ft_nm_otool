@@ -33,3 +33,14 @@ int			s_b64(t_boo state)
 	}
 	return (value);
 }
+
+int			s_size(int size)
+{
+	static int		value = 0;
+
+	if(size != undef)
+	{
+		value = size;
+	}
+	return (size);
+}
