@@ -6,7 +6,7 @@
 /*   By: pleroux <pleroux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/06 22:01:26 by pleroux           #+#    #+#             */
-/*   Updated: 2019/10/09 18:54:50 by pleroux          ###   ########.fr       */
+/*   Updated: 2019/10/09 20:32:27 by pleroux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,21 @@
 #include <ft_printf.h>
 #include "common.h"
 
+void		print_section(struct segment_command_64* sc)
+{
+	uint32_t				i = 0;
+	struct section_64	*sec;
+	static int			num_sec = 0;
+
+	ft_printf("%s:\n", sc->segname);
+	sec = (struct section_64*)((void*)sc + sc->cmdsize);
+	while (i < sc->nsects)
+	{
+		ft_printf("%d: %s - %s\n", ++num_sec, sec->sectname, sec->segname);
+		++sec;
+		++i;
+	}
+}
 
 int			nm_macho(void *ptr)
 {
@@ -45,8 +60,11 @@ int			nm_macho_lc(void *ptr, struct load_command *lc)
 	{
 		if (SIZE(ptr, (void*)lc + lc->cmdsize))
 		{
+			// dont forget return 
 			if (lc->cmd == LC_SYMTAB)
 				nm_macho_symtab(ptr, (struct symtab_command*)lc);
+			if (lc->cmd == LC_SEGMENT_64)
+				print_section((struct segment_command_64*)lc);
 			lc = (struct load_command*)((void*)lc + lc->cmdsize);
 		}
 		else
@@ -55,7 +73,8 @@ int			nm_macho_lc(void *ptr, struct load_command *lc)
 			return (EXIT_FAILURE);
 		}
 	}
-	return (0);
+	ft_printf("truncated or malformed object (symtab_command)\n");
+	return (EXIT_FAILURE);
 }
 
 int			nm_macho_symtab(void *ptr, struct symtab_command *symtab)
@@ -73,10 +92,7 @@ int			nm_macho_symtab(void *ptr, struct symtab_command *symtab)
 				ptr + symtab->stroff,
 				(struct nlist_64 *)(ptr + symtab->symoff),
 				symtab->nsyms);
-		ret = nm_print((t_nlist_p)(struct nlist*)(ptr + symtab->symoff),
-				sorted_array,
-				symtab->nsyms,
-				ptr + symtab->stroff);
+		ret = nm_print(ptr, sorted_array, symtab);
 		free(sorted_array);
 	}
 	else

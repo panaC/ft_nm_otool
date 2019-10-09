@@ -6,7 +6,7 @@
 /*   By: pleroux <pleroux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/06 22:07:21 by pleroux           #+#    #+#             */
-/*   Updated: 2019/10/06 22:30:31 by pleroux          ###   ########.fr       */
+/*   Updated: 2019/10/09 20:00:48 by pleroux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,8 @@ int						nm_macho_lc(void *ptr, struct load_command *lc);
 int						nm_macho_symtab(void *ptr,
 							struct symtab_command *symtab);
 
-int						nm_print(t_nlist_p list, uint32_t *sorted_array,
-							uint32_t nb_symb, void *stroff);
+int						nm_print(void *ptr, uint32_t *sorted_array,
+							struct symtab_command *symtab);
 
 void					sort_array(uint32_t *array, void *off,
 							struct nlist_64 *l, uint32_t n);
