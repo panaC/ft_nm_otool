@@ -6,7 +6,7 @@
 /*   By: pleroux <pleroux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/06 22:01:26 by pleroux           #+#    #+#             */
-/*   Updated: 2019/10/06 22:02:41 by pleroux          ###   ########.fr       */
+/*   Updated: 2019/10/09 18:54:50 by pleroux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,16 +64,22 @@ int			nm_macho_symtab(void *ptr, struct symtab_command *symtab)
 	int			ret;
 
 	// ft_printf("nb symbole table %d\n", symtab->nsyms);
+	ret = EXIT_FAILURE;
 	if ((sorted_array = malloc(sizeof(uint32_t) * symtab->nsyms)) == NULL)
-		return (EXIT_FAILURE);
-	sort_array(sorted_array,
-			ptr + symtab->stroff,
-			(struct nlist_64 *)(ptr + symtab->symoff),
-			symtab->nsyms);
-	ret = nm_print((t_nlist_p)(struct nlist*)(ptr + symtab->symoff),
-			sorted_array,
-			symtab->nsyms,
-			ptr + symtab->stroff);
-	free(sorted_array);
+		return (ret);
+	if (SIZE(ptr, ptr + symtab->stroff + symtab->strsize))
+	{
+		sort_array(sorted_array,
+				ptr + symtab->stroff,
+				(struct nlist_64 *)(ptr + symtab->symoff),
+				symtab->nsyms);
+		ret = nm_print((t_nlist_p)(struct nlist*)(ptr + symtab->symoff),
+				sorted_array,
+				symtab->nsyms,
+				ptr + symtab->stroff);
+		free(sorted_array);
+	}
+	else
+		ft_printf("truncated or malformed object (string_table)\n");
 	return (ret);
 }
