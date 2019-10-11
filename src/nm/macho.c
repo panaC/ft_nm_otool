@@ -6,7 +6,7 @@
 /*   By: pleroux <pleroux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/06 22:01:26 by pleroux           #+#    #+#             */
-/*   Updated: 2019/10/09 20:32:27 by pleroux          ###   ########.fr       */
+/*   Updated: 2019/10/11 22:26:39 by pleroux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,24 @@
 #include <ft_printf.h>
 #include "common.h"
 
-void		print_section(struct segment_command_64* sc)
+void		sectname(struct segment_command_64* sc, int rz)
 {
-	uint32_t				i = 0;
 	struct section_64	*sec;
 	static int			num_sec = 0;
 
+	if (rz == 1)
+		return ((void)((num_sec = 0)));
 	ft_printf("%s:\n", sc->segname);
 	sec = (struct section_64*)((void*)sc + sc->cmdsize);
-	while (i < sc->nsects)
+	while (num_sec < num_sec + sc->nsects)
 	{
-		ft_printf("%d: %s - %s\n", ++num_sec, sec->sectname, sec->segname);
+		if (sec->sectname && sec->sectname[0] != '\0')
+			s_array(sec->sectname, num_sec, 1);
+		else
+			s_array(sc->segname, num_sec, 1);
 		++sec;
-		++i;
+		++num_sec;
+		ft_printf("%d: %s - %s\n", num_sec, sec->sectname, sec->segname);
 	}
 }
 
@@ -64,7 +69,7 @@ int			nm_macho_lc(void *ptr, struct load_command *lc)
 			if (lc->cmd == LC_SYMTAB)
 				nm_macho_symtab(ptr, (struct symtab_command*)lc);
 			if (lc->cmd == LC_SEGMENT_64)
-				print_section((struct segment_command_64*)lc);
+				sectname((struct segment_command_64*)lc);
 			lc = (struct load_command*)((void*)lc + lc->cmdsize);
 		}
 		else
@@ -73,7 +78,8 @@ int			nm_macho_lc(void *ptr, struct load_command *lc)
 			return (EXIT_FAILURE);
 		}
 	}
-	ft_printf("truncated or malformed object (symtab_command)\n");
+	//ft_printf("truncated or malformed object (symtab_command)\n");
+	sectname(NULL, 1); //reset
 	return (EXIT_FAILURE);
 }
 
