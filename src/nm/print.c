@@ -6,7 +6,7 @@
 /*   By: pleroux <pleroux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/06 22:04:38 by pleroux           #+#    #+#             */
-/*   Updated: 2019/10/16 16:45:53 by pleroux          ###   ########.fr       */
+/*   Updated: 2019/10/16 20:57:05 by pleroux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int				nm_print(void *ptr, uint32_t *sorted_array,
 		// A union that holds an index into the string table, n_strx. To specify an empty string (""), set this value to 0. The n_name field is not used in Mach-O files.
 
 		// needed ptr to calcul size
-		if (GETI(list, sorted_array[i], n_type) & N_STAB)
+		if (GETI(list, sorted_array[i], n_type) & N_STAB && !s_a_disp(UN))
 			continue ;
 		if (GETI(list, sorted_array[i], n_value))
 			ft_printf("%0.8x%0.8x %c %s\n",

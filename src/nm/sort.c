@@ -6,7 +6,7 @@
 /*   By: pleroux <pleroux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/06 22:06:01 by pleroux           #+#    #+#             */
-/*   Updated: 2019/10/16 16:07:45 by pleroux          ###   ########.fr       */
+/*   Updated: 2019/10/16 21:16:22 by pleroux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,20 +44,23 @@ void				sort_array(uint32_t *array, void *off, t_nlist_p l, uint32_t n)
 	uint32_t		i;
 
 	init_sort_array(array, n);
-	flag = 1;
-	while (flag)
+	if (!s_a_not_sort(UN))
 	{
-		flag = 0;
-		i = 0;
-		while (i < n - 1)
+		flag = 1;
+		while (flag)
 		{
-			if (ft_strcmp(off + GETI(l, array[i], n_un.n_strx),
-						off + GETI(l, array[i + 1], n_un.n_strx)) > 0)
+			flag = 0;
+			i = 0;
+			while (i < n - 1)
 			{
-				swap(array + i, array + i + 1);
-				flag = 1;
+				if (SORT(ft_strcmp(off + GETI(l, array[i], n_un.n_strx),
+								off + GETI(l, array[i + 1], n_un.n_strx))))
+				{
+					swap(array + i, array + i + 1);
+					flag = 1;
+				}
+				++i;
 			}
-			++i;
 		}
 	}
 }

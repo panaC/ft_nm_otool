@@ -6,7 +6,7 @@
 /*   By: pleroux <pleroux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/06 22:07:21 by pleroux           #+#    #+#             */
-/*   Updated: 2019/10/16 16:05:16 by pleroux          ###   ########.fr       */
+/*   Updated: 2019/10/16 21:11:36 by pleroux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@
 # define GEI(C, U, I)	(C)(s_b64(UN) ? (t_v)(U.b64 + I) : (t_v)(U.b32 + I))
 # define GETI(U, I, M)	((s_b64(UN)) ? (U.b64[I].M) : (U.b32[I].M))
 # define GES(U)			(s_b64(UN) ? sizeof(U->b64) : sizeof(U->b32))
+
+# define SORT(V)		(s_a_sort(UN) ? (V < 0) : (V > 0))
 
 typedef enum			e_boo
 {
@@ -72,6 +74,15 @@ int						s_b64(t_boo state);
 int						s_size(int size);
 char					*s_array(char *data, uint8_t i, int mode);
 
+int						s_a_disp(t_boo state);
+int						s_a_sort(t_boo state);
+int						s_a_not_sort(t_boo state);
+
+uint16_t				swap_uint16(uint16_t val);
+int16_t					swap_int16(int16_t val);
+uint32_t				swap_uint32(uint32_t val);
+int32_t					swap_int32(int32_t val);
+
 /*
 ** nm/
 */
@@ -87,5 +98,10 @@ int						nm_print(void *ptr, uint32_t *sorted_array,
 
 void					sort_array(uint32_t *array, void *off,
 							t_nlist_p l, uint32_t n);
+
+int						nm_fat(void*ptr);
+
+int						check_arg(char *arg);
+
 
 #endif

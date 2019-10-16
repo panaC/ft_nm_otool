@@ -1,38 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   singleton_arg.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pleroux <pleroux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/06 22:04:10 by pleroux           #+#    #+#             */
-/*   Updated: 2019/10/16 21:09:45 by pleroux          ###   ########.fr       */
+/*   Created: 2019/10/16 20:29:39 by pleroux           #+#    #+#             */
+/*   Updated: 2019/10/16 20:45:33 by pleroux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <ft_printf.h>
 #include "common.h"
 
-int			main(int argc, char **argv)
+int			s_a_disp(t_boo state)
 {
-	int		i;
-	int		ret;
+	static t_boo	value = false;
 
-	i = 1;
-	ret = 0;
-	while (argc > i && argv[i][0] == '-')
-	{
-		if (check_arg(argv[i++] + 1))
-			return (ret);
-	}
-	// FIX -ar
-	while (i < argc)
-	{
-		if (argc > 2)
-			ft_printf("\n%s:\n", argv[i]);
-		if (open_file(argv[i], &nm_magic))
-			ret = EXIT_FAILLURE;
-		i++;
-	}
-	return (ret);
+	if (state != undef)
+		value = state;
+	return (value);
 }
+
+int			s_a_sort(t_boo state)
+{
+	static t_boo	value = false;
+
+	if (state != undef)
+		value = state;
+	return (value);
+}
+
+int			s_a_not_sort(t_boo state)
+{
+	static t_boo	value = false;
+
+	if (state != undef)
+		value = state;
+	return (value);
+}
+

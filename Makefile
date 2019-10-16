@@ -6,7 +6,7 @@
 #    By: Pierre <Pierre@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/11 13:59:37 by pierre            #+#    #+#              #
-#    Updated: 2019/10/06 20:18:26 by pleroux          ###   ########.fr        #
+#    Updated: 2019/10/16 20:51:50 by pleroux          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,12 +37,16 @@ SRC_DIR_OTOOL = otool/
 
 SRC_FILE_COM = open.c \
 			   singleton.c \
+			   swap.c	\
+			   singleton_arg.c \
 
 SRC_FILE_NM = main.c \
 		 macho.c \
 		 magic.c \
 		 print.c \
 		 sort.c \
+		 fat.c \
+		 arg.c \
 
 SRC_FILE_OTOOL = main.c \
 

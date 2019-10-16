@@ -6,7 +6,7 @@
 /*   By: pleroux <pleroux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/06 22:01:26 by pleroux           #+#    #+#             */
-/*   Updated: 2019/10/16 16:08:30 by pleroux          ###   ########.fr       */
+/*   Updated: 2019/10/16 20:10:38 by pleroux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ int			nm_macho(void *ptr)
 {
 	uint32_t	size_mh;
 
+	s_b64(((struct mach_header*)ptr)->magic == MH_MAGIC_64);
 	size_mh = s_b64(UN) ? sizeof(struct mach_header_64)
 		: sizeof(struct mach_header);
 	if (SIZE(ptr, ptr + size_mh + sizeof(struct load_command)))
@@ -62,31 +63,28 @@ int			nm_macho(void *ptr)
 int			nm_macho_lc(void *ptr, struct load_command *lc)
 {
 	uint32_t	nb_load_cmd;
+	int			ret;
 
-	nb_load_cmd = s_b64(UN) ?
-		((struct mach_header_64*)ptr)->ncmds :
+	ret = EXIT_FAILURE;
+	nb_load_cmd = s_b64(UN) ? ((struct mach_header_64*)ptr)->ncmds :
 		((struct mach_header*)ptr)->ncmds;
-	// ft_printf("nb of load cmd %d\n", nb_load_cmd);
 	while (nb_load_cmd--)
 	{
 		if (SIZE(ptr, (void*)lc + lc->cmdsize))
 		{
-			// dont forget return
 			if (lc->cmd == LC_SYMTAB)
-				nm_macho_symtab(ptr, (struct symtab_command*)lc);
+				ret = nm_macho_symtab(ptr, (struct symtab_command*)lc);
 			if (lc->cmd == LC_SEGMENT_64)
 				sectname((t_segcmd*)lc, 0);
 			lc = (struct load_command*)((void*)lc + lc->cmdsize);
 		}
 		else
-		{
-			ft_printf("truncated or malformed object (load_command)\n");
-			return (EXIT_FAILURE);
-		}
+			break ;
 	}
-	//ft_printf("truncated or malformed object (symtab_command)\n");
+	if (ret)
+		ft_printf("truncated or malformed object (symtab_command)\n");
 	sectname(NULL, 1); //reset
-	return (EXIT_FAILURE);
+	return (ret);
 }
 
 int			nm_macho_symtab(void *ptr, struct symtab_command *symtab)
