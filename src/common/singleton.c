@@ -6,7 +6,7 @@
 /*   By: pleroux <pleroux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/06 22:00:44 by pleroux           #+#    #+#             */
-/*   Updated: 2019/10/11 22:33:52 by pleroux          ###   ########.fr       */
+/*   Updated: 2019/10/16 11:46:48 by pleroux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,8 @@ int			s_size(int size)
 
 char		*s_array(char *data, uint8_t i, int mode)
 {
-	static char		*value[1000];
+	static char		*value[0x100];
 
-	if (i >= 1000)
-		return (NULL);
 	if (mode == 1)
 		return ((value[i] = data));
 	if (mode == 0)

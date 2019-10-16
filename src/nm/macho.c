@@ -6,7 +6,7 @@
 /*   By: pleroux <pleroux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/06 22:01:26 by pleroux           #+#    #+#             */
-/*   Updated: 2019/10/11 22:26:39 by pleroux          ###   ########.fr       */
+/*   Updated: 2019/10/16 16:08:30 by pleroux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,24 +16,30 @@
 #include <ft_printf.h>
 #include "common.h"
 
-void		sectname(struct segment_command_64* sc, int rz)
+void		sectname(t_segcmd *sc, int rz)
 {
-	struct section_64	*sec;
-	static int			num_sec = 0;
+	t_sect				*sect;
+	static uint32_t		num_sec = 1;
+	uint32_t			i;
 
 	if (rz == 1)
-		return ((void)((num_sec = 0)));
-	ft_printf("%s:\n", sc->segname);
-	sec = (struct section_64*)((void*)sc + sc->cmdsize);
-	while (num_sec < num_sec + sc->nsects)
 	{
-		if (sec->sectname && sec->sectname[0] != '\0')
-			s_array(sec->sectname, num_sec, 1);
+		return ((void)((num_sec = 0)));
+	}
+	// ft_printf("%s:\n", GET(sc, segname));
+	sect = (t_sect*)((void*)sc + GET(sc, cmdsize));
+	i = 0;
+	while (i < GET(sc, nsects))
+	{
+		if (GET(sect, sectname)[0] && GET(sect, sectname)[0] != 25)
+			s_array(GET(sect, sectname), num_sec, 1);
 		else
-			s_array(sc->segname, num_sec, 1);
-		++sec;
+			s_array(GET(sc, segname), num_sec, 1);
+		// ft_printf("%d: %s - %s\n", num_sec, GET(sect, sectname), GET(sect, segname));
+		sect = (void*)sect + sizeof(t_sect); //FIX
+		sect = (void*)sect + GES(sect);
 		++num_sec;
-		ft_printf("%d: %s - %s\n", num_sec, sec->sectname, sec->segname);
+		++i;
 	}
 }
 
@@ -65,11 +71,11 @@ int			nm_macho_lc(void *ptr, struct load_command *lc)
 	{
 		if (SIZE(ptr, (void*)lc + lc->cmdsize))
 		{
-			// dont forget return 
+			// dont forget return
 			if (lc->cmd == LC_SYMTAB)
 				nm_macho_symtab(ptr, (struct symtab_command*)lc);
 			if (lc->cmd == LC_SEGMENT_64)
-				sectname((struct segment_command_64*)lc);
+				sectname((t_segcmd*)lc, 0);
 			lc = (struct load_command*)((void*)lc + lc->cmdsize);
 		}
 		else
@@ -96,7 +102,7 @@ int			nm_macho_symtab(void *ptr, struct symtab_command *symtab)
 	{
 		sort_array(sorted_array,
 				ptr + symtab->stroff,
-				(struct nlist_64 *)(ptr + symtab->symoff),
+				(t_nlist_p)(struct nlist*)(ptr + symtab->symoff),
 				symtab->nsyms);
 		ret = nm_print(ptr, sorted_array, symtab);
 		free(sorted_array);

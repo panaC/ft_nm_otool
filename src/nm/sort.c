@@ -6,7 +6,7 @@
 /*   By: pleroux <pleroux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/06 22:06:01 by pleroux           #+#    #+#             */
-/*   Updated: 2019/10/06 22:07:05 by pleroux          ###   ########.fr       */
+/*   Updated: 2019/10/16 16:07:45 by pleroux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <ft_printf.h>
 #include <libft.h>
 #include <mach-o/nlist.h>
+#include "common.h"
 
 static void			swap(uint32_t *a, uint32_t *b)
 {
@@ -37,8 +38,7 @@ static uint32_t		*init_sort_array(uint32_t *array, uint32_t n)
 	return (array);
 }
 
-void				sort_array(uint32_t *array, void *off,
-		struct nlist_64 *l, uint32_t n)
+void				sort_array(uint32_t *array, void *off, t_nlist_p l, uint32_t n)
 {
 	int				flag;
 	uint32_t		i;
@@ -51,8 +51,8 @@ void				sort_array(uint32_t *array, void *off,
 		i = 0;
 		while (i < n - 1)
 		{
-			if (ft_strcmp(off + l[array[i]].n_un.n_strx,
-						off + l[array[i + 1]].n_un.n_strx) > 0)
+			if (ft_strcmp(off + GETI(l, array[i], n_un.n_strx),
+						off + GETI(l, array[i + 1], n_un.n_strx)) > 0)
 			{
 				swap(array + i, array + i + 1);
 				flag = 1;
