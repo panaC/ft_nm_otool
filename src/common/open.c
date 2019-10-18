@@ -6,7 +6,7 @@
 /*   By: pleroux <pleroux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/06 21:59:48 by pleroux           #+#    #+#             */
-/*   Updated: 2019/10/06 22:00:34 by pleroux          ###   ########.fr       */
+/*   Updated: 2019/10/18 20:55:10 by pleroux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ int				open_file(char *path, int (*run)(void*))
 		if ((ptr = mmap(0, buf.st_size, PROT_READ, MAP_PRIVATE, fd, 0))
 				!= MAP_FAILED)
 		{
+			ft_print_memory(ptr + 0xb0, 500);
 			if (run)
 				ret = run(ptr);
 			if (free_file(fd, ptr, buf.st_size, path) == EXIT_FAILURE)
