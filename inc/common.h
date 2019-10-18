@@ -6,7 +6,7 @@
 /*   By: pleroux <pleroux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/06 22:07:21 by pleroux           #+#    #+#             */
-/*   Updated: 2019/10/16 22:09:03 by pleroux          ###   ########.fr       */
+/*   Updated: 2019/10/18 15:53:08 by pleroux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,12 @@ typedef union			u_sect
 	struct section_64	b64;
 }						t_sect;
 
+typedef union			u_sect_p
+{
+	struct section		*b32;
+	struct section_64	*b64;
+}						t_sect_p;
+
 typedef void*			t_v;
 typedef t_nlist*		t_n;
 
@@ -102,6 +108,14 @@ void					sort_array(uint32_t *array, void *off,
 int						nm_fat(void*ptr);
 
 int						check_arg(char *arg);
+
+/*
+** otool/
+*/
+
+int						otool_macho(void *ptr);
+void					otool_print_memory(const void *addr, size_t size);
+int						otool_magic(void *ptr);
 
 
 #endif

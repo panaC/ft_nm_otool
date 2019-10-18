@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: pleroux <pleroux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/06 22:02:53 by pleroux           #+#    #+#             */
-/*   Updated: 2019/10/18 20:42:31 by pleroux          ###   ########.fr       */
+/*   Created: 2019/10/18 14:44:14 by pleroux           #+#    #+#             */
+/*   Updated: 2019/10/18 20:41:07 by pleroux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,15 @@
 #include "common.h"
 #include <ft_printf.h>
 
-int					nm_magic(void *ptr)
+int					otool_magic(void *ptr)
 {
 	// s_b64(is_64bit(*(uint32_t *)ptr));
 	if (*(uint32_t *)ptr == MH_MAGIC_64)
-		return (nm_macho(ptr));
+		return (otool_macho(ptr));
 	if (*(uint32_t *)ptr == MH_CIGAM_64)
 		ft_printf("macho64-inv\n");
 	if (*(uint32_t *)ptr == MH_MAGIC)
-		return (nm_macho(ptr));
+		return (otool_macho(ptr));
 	if (*(uint32_t *)ptr == MH_CIGAM)
 		ft_printf("macho-inv\n");
 	if (*(uint32_t *)ptr == FAT_MAGIC)
@@ -33,7 +33,8 @@ int					nm_magic(void *ptr)
 	if (*(uint32_t *)ptr == FAT_MAGIC_64)
 		ft_printf("fat-64");
 	if (*(uint32_t *)ptr == FAT_CIGAM)
-		return (nm_fat(ptr));
+		//return (otool_fat(ptr));
+		ft_printf("");
 	if (*(uint32_t *)ptr == FAT_CIGAM_64)
 		ft_printf("fat-64 inv");
 	if (ft_strncmp((char *)ptr, ARMAG, SARMAG) == 0)
