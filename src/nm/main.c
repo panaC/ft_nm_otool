@@ -6,7 +6,7 @@
 /*   By: pleroux <pleroux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/06 22:04:10 by pleroux           #+#    #+#             */
-/*   Updated: 2019/10/19 16:02:30 by pleroux          ###   ########.fr       */
+/*   Updated: 2019/10/19 17:04:54 by pleroux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 int			main(int argc, char **argv)
 {
 	int		i;
+	int		start;
 	int		ret;
 
 	i = 1;
@@ -25,9 +26,10 @@ int			main(int argc, char **argv)
 		if (check_arg(argv[i++] + 1))
 			return (ret);
 	}
+	start = i;
 	while (i < argc)
 	{
-		if (argc > 2)
+		if (argc - start > 1)
 			ft_printf("\n%s:\n", argv[i]);
 		if (open_file(argv[i], &nm_magic))
 			ret = EXIT_FAILLURE;

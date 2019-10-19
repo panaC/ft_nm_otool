@@ -6,7 +6,7 @@
 /*   By: pleroux <pleroux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/06 22:04:38 by pleroux           #+#    #+#             */
-/*   Updated: 2019/10/19 16:08:06 by pleroux          ###   ########.fr       */
+/*   Updated: 2019/10/19 19:03:30 by pleroux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,13 @@ static char		type_char(t_nlist *list)
 	return ('S');
 }
 
+static char		type_char_extern(t_nlist *list)
+{
+	if ((GET(list, n_type) & N_EXT) == 0)
+		return (ft_tolower(type_char(list)));
+	return (type_char(list));
+}
+
 void			nm_print(void *ptr, uint32_t *sorted_array,
 		struct symtab_command *symtab)
 {
@@ -60,11 +67,11 @@ void			nm_print(void *ptr, uint32_t *sorted_array,
 			ft_printf("%0.8x%0.8x %c %s\n",
 					GETI(list, sorted_array[i], n_value) >> 32,
 					GETI(list, sorted_array[i], n_value),
-					type_char(GEI(t_nlist*, list, sorted_array[i])),
+					type_char_extern(GEI(t_nlist*, list, sorted_array[i])),
 					GETI(stroff + list, sorted_array[i], n_un.n_strx));
 		else
 			ft_printf("%16c %c %s\n", ' ',
-					type_char(GEI(t_nlist*, list, sorted_array[i])),
+					type_char_extern(GEI(t_nlist*, list, sorted_array[i])),
 					GETI(stroff + list, sorted_array[i], n_un.n_strx));
 		i++;
 	}
