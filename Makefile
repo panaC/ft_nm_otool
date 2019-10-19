@@ -6,7 +6,7 @@
 #    By: Pierre <Pierre@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/11 13:59:37 by pierre            #+#    #+#              #
-#    Updated: 2019/10/18 21:37:04 by pleroux          ###   ########.fr        #
+#    Updated: 2019/10/19 16:57:37 by pleroux          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,6 +52,7 @@ SRC_FILE_OTOOL = main.c \
 				 magic.c \
 				 macho.c \
 				 print_memory.c \
+				 fat.c \
 
 SRC_NM = $(addprefix $(SRC_DIR), $(addprefix $(SRC_DIR_NM), $(SRC_FILE_NM)))
 SRC_OTOOL = $(addprefix $(SRC_DIR), $(addprefix $(SRC_DIR_OTOOL), $(SRC_FILE_OTOOL)))

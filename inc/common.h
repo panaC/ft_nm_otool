@@ -6,7 +6,7 @@
 /*   By: pleroux <pleroux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/06 22:07:21 by pleroux           #+#    #+#             */
-/*   Updated: 2019/10/19 15:58:41 by pleroux          ###   ########.fr       */
+/*   Updated: 2019/10/19 16:56:34 by pleroux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,5 +117,6 @@ int						otool_macho(void *ptr);
 void					otool_print_memory(const void *addr, size_t size,
 		uint64_t address);
 int						otool_magic(void *ptr);
+int						otool_fat(void *ptr);
 
 #endif

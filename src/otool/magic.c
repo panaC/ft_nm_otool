@@ -6,7 +6,7 @@
 /*   By: pleroux <pleroux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/18 14:44:14 by pleroux           #+#    #+#             */
-/*   Updated: 2019/10/19 16:03:29 by pleroux          ###   ########.fr       */
+/*   Updated: 2019/10/19 16:57:09 by pleroux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@
 #include <ar.h>
 #include "common.h"
 #include <ft_printf.h>
-
-// don't forget fat otool
 
 int					otool_magic(void *ptr)
 {
@@ -34,7 +32,7 @@ int					otool_magic(void *ptr)
 	if (*(uint32_t *)ptr == FAT_MAGIC_64)
 		ft_printf("fat-64");
 	if (*(uint32_t *)ptr == FAT_CIGAM)
-		ft_printf("");
+		return (otool_fat(ptr));
 	if (*(uint32_t *)ptr == FAT_CIGAM_64)
 		ft_printf("fat-64 inv");
 	if (ft_strncmp((char *)ptr, ARMAG, SARMAG) == 0)
