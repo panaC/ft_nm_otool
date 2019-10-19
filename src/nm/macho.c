@@ -6,7 +6,7 @@
 /*   By: pleroux <pleroux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/06 22:01:26 by pleroux           #+#    #+#             */
-/*   Updated: 2019/10/16 22:08:35 by pleroux          ###   ########.fr       */
+/*   Updated: 2019/10/19 16:05:19 by pleroux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ void		sectname(t_segcmd *sc, int rz)
 	{
 		return ((void)((num_sec = 0)));
 	}
-	// ft_printf("%s:\n", GET(sc, segname));
 	sect = (t_sect*)((void*)sc + GET(sc, cmdsize));
 	i = 0;
 	while (i < GET(sc, nsects))
@@ -35,7 +34,6 @@ void		sectname(t_segcmd *sc, int rz)
 			s_array(GET(sect, sectname), num_sec, 1);
 		else
 			s_array(GET(sc, segname), num_sec, 1);
-		// ft_printf("%d: %s - %s\n", num_sec, GET(sect, sectname), GET(sect, segname));
 		sect = (void*)sect + sizeof(t_sect); //FIX
 		sect = (void*)sect + GES(sect);
 		++num_sec;
@@ -83,7 +81,7 @@ int			nm_macho_lc(void *ptr, struct load_command *lc)
 	}
 	if (ret)
 		ft_printf("truncated or malformed object (symtab_command)\n");
-	sectname(NULL, 1); //reset
+	sectname(NULL, 1);
 	return (ret);
 }
 
@@ -92,9 +90,9 @@ int			nm_macho_symtab(void *ptr, struct symtab_command *symtab)
 	uint32_t	*sorted_array;
 	int			ret;
 
-	// ft_printf("nb symbole table %d\n", symtab->nsyms);
 	ret = EXIT_FAILURE;
-	if ((sorted_array = (uint32_t*)malloc(sizeof(uint32_t) * symtab->nsyms)) == NULL)
+	if ((sorted_array = (uint32_t*)malloc(sizeof(uint32_t) * symtab->nsyms))
+			== NULL)
 		return (ret);
 	if (SIZE(ptr, ptr + symtab->stroff + symtab->strsize))
 	{

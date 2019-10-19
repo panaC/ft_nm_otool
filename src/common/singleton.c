@@ -6,7 +6,7 @@
 /*   By: pleroux <pleroux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/06 22:00:44 by pleroux           #+#    #+#             */
-/*   Updated: 2019/10/16 20:40:24 by pleroux          ###   ########.fr       */
+/*   Updated: 2019/10/19 16:01:09 by pleroux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ int			s_b64(t_boo state)
 	if (state != undef)
 	{
 		value = state;
-		// ft_printf("b64:%d\n", value);
 	}
 	return (value);
 }
@@ -38,7 +37,7 @@ int			s_size(int size)
 {
 	static int		value = 0;
 
-	if(size != undef)
+	if (size != undef)
 	{
 		value = size;
 	}

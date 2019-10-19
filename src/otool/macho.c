@@ -6,7 +6,7 @@
 /*   By: pleroux <pleroux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/18 14:47:08 by pleroux           #+#    #+#             */
-/*   Updated: 2019/10/19 15:27:52 by pleroux          ###   ########.fr       */
+/*   Updated: 2019/10/19 16:05:33 by pleroux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@
 #include <ft_printf.h>
 #include "common.h"
 
-int			section_text(void *ptr, uint32_t offset, uint32_t size, uint64_t address)
+int			section_text(void *ptr, uint32_t offset, uint32_t size,
+		uint64_t address)
 {
 	ft_printf("Contents of (__TEXT,__text) section\n");
 	if (SIZE(ptr, ptr + offset + size))
@@ -50,12 +51,9 @@ int			section(void *ptr, t_sect_p sect, uint32_t nsects)
 int			otool_macho_lc(void *ptr, struct load_command *lc)
 {
 	uint32_t	nb_load_cmd;
-	int			ret;
 
-	ret = EXIT_FAILURE;
 	nb_load_cmd = s_b64(UN) ? ((struct mach_header_64*)ptr)->ncmds :
 		((struct mach_header*)ptr)->ncmds;
-
 	while (nb_load_cmd--)
 	{
 		if (SIZE(ptr, (void*)lc + lc->cmdsize))
@@ -65,7 +63,8 @@ int			otool_macho_lc(void *ptr, struct load_command *lc)
 			{
 				return (section(ptr,
 					(t_sect_p)(struct section*)((void*)lc + (s_b64(UN) ?
-						sizeof(struct segment_command_64) : sizeof(struct segment_command))),
+						sizeof(struct segment_command_64) :
+						sizeof(struct segment_command))),
 					GET(((t_segcmd*)lc), nsects)));
 			}
 			lc = (struct load_command*)((void*)lc + lc->cmdsize);
@@ -93,5 +92,3 @@ int			otool_macho(void *ptr)
 	}
 	return (0);
 }
-
-

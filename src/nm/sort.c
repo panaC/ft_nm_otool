@@ -6,7 +6,7 @@
 /*   By: pleroux <pleroux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/06 22:06:01 by pleroux           #+#    #+#             */
-/*   Updated: 2019/10/16 21:16:22 by pleroux          ###   ########.fr       */
+/*   Updated: 2019/10/19 16:02:57 by pleroux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ static uint32_t		*init_sort_array(uint32_t *array, uint32_t n)
 	return (array);
 }
 
-void				sort_array(uint32_t *array, void *off, t_nlist_p l, uint32_t n)
+void				sort_array(uint32_t *array, void *off, t_nlist_p l,
+		uint32_t n)
 {
 	int				flag;
 	uint32_t		i;

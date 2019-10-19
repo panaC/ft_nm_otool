@@ -6,7 +6,7 @@
 /*   By: pleroux <pleroux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/06 22:04:10 by pleroux           #+#    #+#             */
-/*   Updated: 2019/10/19 15:08:02 by pleroux          ###   ########.fr       */
+/*   Updated: 2019/10/19 16:02:30 by pleroux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ int			main(int argc, char **argv)
 		if (check_arg(argv[i++] + 1))
 			return (ret);
 	}
-	// FIX -ar
 	while (i < argc)
 	{
 		if (argc > 2)

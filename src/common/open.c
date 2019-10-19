@@ -6,7 +6,7 @@
 /*   By: pleroux <pleroux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/06 21:59:48 by pleroux           #+#    #+#             */
-/*   Updated: 2019/10/19 13:39:02 by pleroux          ###   ########.fr       */
+/*   Updated: 2019/10/19 16:00:35 by pleroux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,13 +56,12 @@ int		open_fd(char *path, struct stat *buf)
 	return (-1);
 }
 
-int				open_file(char *path, int (*run)(void*))
+int		open_file(char *path, int (*run)(void*))
 {
 	int			fd;
 	struct stat	buf;
 	void		*ptr;
 	int			ret;
-
 
 	ret = EXIT_FAILURE;
 	if ((fd = open_fd(path, &buf)) > -1)
@@ -83,5 +82,3 @@ int				open_file(char *path, int (*run)(void*))
 	}
 	return (ret);
 }
-
-

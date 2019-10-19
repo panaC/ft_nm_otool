@@ -6,7 +6,7 @@
 /*   By: pleroux <pleroux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 20:29:39 by pleroux           #+#    #+#             */
-/*   Updated: 2019/10/16 20:45:33 by pleroux          ###   ########.fr       */
+/*   Updated: 2019/10/19 16:00:53 by pleroux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,3 @@ int			s_a_not_sort(t_boo state)
 		value = state;
 	return (value);
 }
-

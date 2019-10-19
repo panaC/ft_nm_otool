@@ -6,7 +6,7 @@
 /*   By: pleroux <pleroux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/06 22:02:53 by pleroux           #+#    #+#             */
-/*   Updated: 2019/10/18 20:42:31 by pleroux          ###   ########.fr       */
+/*   Updated: 2019/10/19 16:02:41 by pleroux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,8 @@
 #include "common.h"
 #include <ft_printf.h>
 
-int					nm_magic(void *ptr)
+int		nm_magic(void *ptr)
 {
-	// s_b64(is_64bit(*(uint32_t *)ptr));
 	if (*(uint32_t *)ptr == MH_MAGIC_64)
 		return (nm_macho(ptr));
 	if (*(uint32_t *)ptr == MH_CIGAM_64)

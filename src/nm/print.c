@@ -6,7 +6,7 @@
 /*   By: pleroux <pleroux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/06 22:04:38 by pleroux           #+#    #+#             */
-/*   Updated: 2019/10/16 22:09:20 by pleroux          ###   ########.fr       */
+/*   Updated: 2019/10/19 16:08:06 by pleroux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 
 static char		type_char(t_nlist *list)
 {
-	// ft_printf("%0.2x - %0.2x\n", (list->n_type & N_TYPE), (list->n_sect));
 	if ((GET(list, n_type) & N_TYPE) == N_UNDF)
 		return ('U');
 	if ((GET(list, n_type) & N_TYPE) == N_ABS)
@@ -27,23 +26,22 @@ static char		type_char(t_nlist *list)
 		return ('I');
 	if ((GET(list, n_type) & N_TYPE) == N_SECT)
 	{
-		// ft_printf("sect:%d\n", GET(list, n_sect));
 		if (!ft_strcmp(s_array(NULL, GET(list, n_sect), 0), SECT_DATA) ||
 				!ft_strcmp(s_array(NULL, GET(list, n_sect), 0), SEG_DATA))
-				return ('D');
+			return ('D');
 		if (!ft_strcmp(s_array(NULL, GET(list, n_sect), 0), SECT_BSS))
-				return ('B');
+			return ('B');
 		if (!ft_strcmp(s_array(NULL, GET(list, n_sect), 0), SECT_TEXT) ||
 				!ft_strcmp(s_array(NULL, GET(list, n_sect), 0), SEG_TEXT))
-				return ('T');
+			return ('T');
 		if (!ft_strcmp(s_array(NULL, GET(list, n_sect), 0), SECT_COMMON))
-				return ('C');
+			return ('C');
 	}
 	return ('S');
 }
 
 void			nm_print(void *ptr, uint32_t *sorted_array,
-					struct symtab_command *symtab)
+		struct symtab_command *symtab)
 {
 	uint32_t	i;
 	t_nlist_p	list;
