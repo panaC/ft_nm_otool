@@ -6,11 +6,13 @@
 /*   By: pleroux <pleroux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/18 15:41:01 by pleroux           #+#    #+#             */
-/*   Updated: 2019/10/18 15:41:27 by pleroux          ###   ########.fr       */
+/*   Updated: 2019/10/19 15:54:15 by pleroux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <libft.h>
+#include <ft_printf.h>
+#include "common.h"
 
 static void	print_hex(unsigned char hex)
 {
@@ -21,52 +23,36 @@ static void	print_hex(unsigned char hex)
 	ft_putchar(tab[hex % 16]);
 }
 
-static void	print_char(unsigned char hex)
-{
-	if (hex > 31 && hex < 127)
-		ft_putchar(hex);
-	else
-		ft_putchar('.');
-}
-
-static void	make_hexs(unsigned char *line, size_t curline, size_t size)
+static void	make_hexs(unsigned char *line, size_t remain)
 {
 	size_t	i;
 
 	i = 0;
-	while (i < 16)
+	while (i < 16 && i < remain)
 	{
-		if (i && i % 2 == 0)
+		print_hex(line[i]);
+		if (i < 16 && i < remain)
 			ft_putchar(' ');
-		if (curline * 16 + i < size)
-			print_hex(line[i]);
-		else
-			ft_putstr("  ");
 		i++;
 	}
 }
 
-void		otool_print_memory(const void *addr, size_t size)
+void		otool_print_memory(const void *addr, size_t size, uint64_t address)
 {
-	size_t			curline;
 	unsigned char	*tmp;
-	size_t			i;
+	int				remain;
 
-	curline = 0;
 	tmp = (unsigned char*)addr;
-	while (curline * 16 < size)
+	remain = size - (size_t)((void*)tmp - addr);
+	while (remain > 0)
 	{
-		make_hexs(tmp, curline, size);
-		ft_putstr("  ");
-		i = 0;
-		while (i < 16)
-		{
-			if (curline * 16 + i < size)
-				print_char(tmp[i]);
-			i++;
-		}
+		if (s_b64(UN))
+			ft_printf("%0.8x", address >> 32);
+		ft_printf("%0.8x\t", address);
+		make_hexs(tmp, remain);
 		ft_putchar('\n');
 		tmp += 16;
-		curline++;
+		remain = size - (size_t)((void*)tmp - addr);
+		address += 0x10;
 	}
 }
