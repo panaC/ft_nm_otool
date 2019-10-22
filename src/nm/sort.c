@@ -6,7 +6,7 @@
 /*   By: pleroux <pleroux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/06 22:06:01 by pleroux           #+#    #+#             */
-/*   Updated: 2019/10/19 16:02:57 by pleroux          ###   ########.fr       */
+/*   Updated: 2019/10/22 19:00:08 by pleroux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,14 @@
 #include <mach-o/nlist.h>
 #include "common.h"
 
-static void			swap(uint32_t *a, uint32_t *b)
+static int			swap(uint32_t *a, uint32_t *b)
 {
 	uint32_t		tmp;
 
 	tmp = *a;
 	*a = *b;
 	*b = tmp;
+	return (1);
 }
 
 static uint32_t		*init_sort_array(uint32_t *array, uint32_t n)
@@ -38,13 +39,17 @@ static uint32_t		*init_sort_array(uint32_t *array, uint32_t n)
 	return (array);
 }
 
-void				sort_array(uint32_t *array, void *off, t_nlist_p l,
-		uint32_t n)
+void				sort_array(void *ptr, uint32_t *array,
+		struct symtab_command *symtab)
 {
 	int				flag;
 	uint32_t		i;
+	t_nlist_p		l;
+	void			*le;
+	void			*ri;
 
-	init_sort_array(array, n);
+	l = (t_nlist_p)(struct nlist*)(ptr + symtab->symoff);
+	init_sort_array(array, symtab->nsyms);
 	if (!s_a_not_sort(UN))
 	{
 		flag = 1;
@@ -52,14 +57,12 @@ void				sort_array(uint32_t *array, void *off, t_nlist_p l,
 		{
 			flag = 0;
 			i = 0;
-			while (i < n - 1)
+			while (i < symtab->nsyms - 1)
 			{
-				if (SORT(ft_strcmp(off + GETI(l, array[i], n_un.n_strx),
-								off + GETI(l, array[i + 1], n_un.n_strx))))
-				{
-					swap(array + i, array + i + 1);
-					flag = 1;
-				}
+				le = ptr + symtab->stroff + GETI(l, array[i], n_un.n_strx);
+				ri = ptr + symtab->stroff + GETI(l, array[i + 1], n_un.n_strx);
+				if (SIZE(ptr, le) && SIZE(ptr, ri) && SORT(ft_strcmp(le, ri)))
+					flag = swap(array + i, array + i + 1);
 				++i;
 			}
 		}

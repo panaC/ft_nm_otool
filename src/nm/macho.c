@@ -6,7 +6,7 @@
 /*   By: pleroux <pleroux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/06 22:01:26 by pleroux           #+#    #+#             */
-/*   Updated: 2019/10/19 16:05:19 by pleroux          ###   ########.fr       */
+/*   Updated: 2019/10/22 18:55:24 by pleroux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,12 +94,10 @@ int			nm_macho_symtab(void *ptr, struct symtab_command *symtab)
 	if ((sorted_array = (uint32_t*)malloc(sizeof(uint32_t) * symtab->nsyms))
 			== NULL)
 		return (ret);
-	if (SIZE(ptr, ptr + symtab->stroff + symtab->strsize))
+	if (SIZE(ptr, ptr + symtab->stroff + symtab->strsize) &&
+		SIZE(ptr, ptr + symtab->symoff + SLI() * symtab->nsyms))
 	{
-		sort_array(sorted_array,
-				ptr + symtab->stroff,
-				(t_nlist_p)(struct nlist*)(ptr + symtab->symoff),
-				symtab->nsyms);
+		sort_array(ptr, sorted_array, symtab);
 		nm_print(ptr, sorted_array, symtab);
 		ret = 0;
 	}

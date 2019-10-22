@@ -6,7 +6,7 @@
 /*   By: pleroux <pleroux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/06 22:07:21 by pleroux           #+#    #+#             */
-/*   Updated: 2019/10/19 16:56:34 by pleroux          ###   ########.fr       */
+/*   Updated: 2019/10/22 18:46:50 by pleroux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,13 @@
 # define ABS(A)			((A < 0) ? (A * -1) : A)
 # define SIZE(A, B)		(ABS((int)(B - A)) <= s_size(UN))
 # define GE(U)			((s_b64(UN)) ? (U->b64) : (U->b32))
+# define GD(U)			((s_b64(UN)) ? (U.b64) : (U.b32))
 # define GET(U, M)		((s_b64(UN)) ? (U->b64.M) : (U->b32.M))
 # define GEI(C, U, I)	(C)(s_b64(UN) ? (t_v)(U.b64 + I) : (t_v)(U.b32 + I))
 # define GETI(U, I, M)	((s_b64(UN)) ? (U.b64[I].M) : (U.b32[I].M))
 # define GES(U)			(s_b64(UN) ? sizeof(U->b64) : sizeof(U->b32))
+# define GED(U)			(s_b64(UN) ? sizeof(U.b64) : sizeof(U.b32))
+# define SLI()			(s_b64(UN) ? sizeof(t_nli) : sizeof(struct nlist_64))
 
 # define SORT(V)		(s_a_sort(UN) ? (V < 0) : (V > 0))
 
@@ -69,6 +72,7 @@ typedef union			u_sect_p
 
 typedef void*			t_v;
 typedef t_nlist*		t_n;
+typedef struct nlist	t_nli;
 
 /*
 ** common/
@@ -102,8 +106,8 @@ int						nm_macho_symtab(void *ptr,
 void					nm_print(void *ptr, uint32_t *sorted_array,
 							struct symtab_command *symtab);
 
-void					sort_array(uint32_t *array, void *off,
-							t_nlist_p l, uint32_t n);
+void					sort_array(void *ptr, uint32_t *array,
+					struct symtab_command *symtab);
 
 int						nm_fat(void*ptr);
 

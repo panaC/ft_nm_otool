@@ -6,7 +6,7 @@
 /*   By: pleroux <pleroux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/06 22:04:38 by pleroux           #+#    #+#             */
-/*   Updated: 2019/10/19 19:03:30 by pleroux          ###   ########.fr       */
+/*   Updated: 2019/10/22 18:57:12 by pleroux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,9 @@ void			nm_print(void *ptr, uint32_t *sorted_array,
 	stroff = ptr + symtab->stroff;
 	nb_symb = symtab->nsyms;
 	list = (t_nlist_p)(struct nlist*)(ptr + symtab->symoff);
-	i = 0;
-	while (i < nb_symb)
+	i = -1;
+	while ((++i) < nb_symb &&
+		SIZE(ptr, GETI(stroff + list, sorted_array[i], n_un.n_strx)))
 	{
 		if (GETI(list, sorted_array[i], n_type) & N_STAB && !s_a_disp(UN))
 			continue ;
@@ -73,6 +74,5 @@ void			nm_print(void *ptr, uint32_t *sorted_array,
 			ft_printf("%16c %c %s\n", ' ',
 					type_char_extern(GEI(t_nlist*, list, sorted_array[i])),
 					GETI(stroff + list, sorted_array[i], n_un.n_strx));
-		i++;
 	}
 }
