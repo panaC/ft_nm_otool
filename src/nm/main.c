@@ -6,12 +6,17 @@
 /*   By: pleroux <pleroux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/06 22:04:10 by pleroux           #+#    #+#             */
-/*   Updated: 2019/10/19 17:04:54 by pleroux          ###   ########.fr       */
+/*   Updated: 2019/10/23 21:48:07 by pleroux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_printf.h>
 #include "common.h"
+
+static void		test()
+{
+	return ;
+}
 
 int			main(int argc, char **argv)
 {
@@ -35,5 +40,6 @@ int			main(int argc, char **argv)
 			ret = EXIT_FAILLURE;
 		i++;
 	}
+	test();
 	return (ret);
 }

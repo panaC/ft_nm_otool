@@ -6,7 +6,7 @@
 /*   By: pleroux <pleroux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/06 22:06:01 by pleroux           #+#    #+#             */
-/*   Updated: 2019/10/22 19:00:08 by pleroux          ###   ########.fr       */
+/*   Updated: 2019/10/23 23:37:02 by pleroux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,6 @@
 #include <libft.h>
 #include <mach-o/nlist.h>
 #include "common.h"
-
-static int			swap(uint32_t *a, uint32_t *b)
-{
-	uint32_t		tmp;
-
-	tmp = *a;
-	*a = *b;
-	*b = tmp;
-	return (1);
-}
 
 static uint32_t		*init_sort_array(uint32_t *array, uint32_t n)
 {
@@ -37,6 +27,16 @@ static uint32_t		*init_sort_array(uint32_t *array, uint32_t n)
 		++i;
 	}
 	return (array);
+}
+
+int			swap(uint32_t *a, uint32_t *b)
+{
+	uint32_t		tmp;
+
+	tmp = *a;
+	*a = *b;
+	*b = tmp;
+	return (1);
 }
 
 void				sort_array(void *ptr, uint32_t *array,

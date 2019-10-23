@@ -6,7 +6,7 @@
 /*   By: pleroux <pleroux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/06 22:04:38 by pleroux           #+#    #+#             */
-/*   Updated: 2019/10/22 18:57:12 by pleroux          ###   ########.fr       */
+/*   Updated: 2019/10/23 23:43:10 by pleroux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static char		type_char_extern(t_nlist *list)
 	return (type_char(list));
 }
 
-void			nm_print(void *ptr, uint32_t *sorted_array,
+void			nm_print_buffer(void *ptr, char **string_array,
 		struct symtab_command *symtab)
 {
 	uint32_t	i;
@@ -60,19 +60,43 @@ void			nm_print(void *ptr, uint32_t *sorted_array,
 	list = (t_nlist_p)(struct nlist*)(ptr + symtab->symoff);
 	i = -1;
 	while ((++i) < nb_symb &&
-		SIZE(ptr, GETI(stroff + list, sorted_array[i], n_un.n_strx)))
+		SIZE(ptr, GETI(stroff + list, i, n_un.n_strx)))
 	{
-		if (GETI(list, sorted_array[i], n_type) & N_STAB && !s_a_disp(UN))
+		if (GETI(list, i, n_type) & N_STAB && !s_a_disp(UN))
 			continue ;
-		if (GETI(list, sorted_array[i], n_value))
-			ft_printf("%0.8x%0.8x %c %s\n",
-					GETI(list, sorted_array[i], n_value) >> 32,
-					GETI(list, sorted_array[i], n_value),
-					type_char_extern(GEI(t_nlist*, list, sorted_array[i])),
-					GETI(stroff + list, sorted_array[i], n_un.n_strx));
+		if (GETI(list, i, n_value))
+			ft_sprintf(&(string_array[i]), "%0.8x%0.8x %c %s\n",
+					GETI(list, i, n_value) >> 32,
+					GETI(list, i, n_value),
+					type_char_extern(GEI(t_nlist*, list, i)),
+					GETI(stroff + list, i, n_un.n_strx));
 		else
-			ft_printf("%16c %c %s\n", ' ',
-					type_char_extern(GEI(t_nlist*, list, sorted_array[i])),
-					GETI(stroff + list, sorted_array[i], n_un.n_strx));
+			ft_sprintf(&(string_array[i]), "%16c %c %s\n", ' ',
+					type_char_extern(GEI(t_nlist*, list, i)),
+					GETI(stroff + list, i, n_un.n_strx));
 	}
+}
+
+void			nm_print(char **string_array, uint32_t *sorted_array,
+		struct symtab_command *symtab)
+{
+	uint32_t	i;
+	uint32_t	c;
+
+	c = s_b64(UN) ? 17 : 9;
+	i = 0;
+	while (i < symtab->nsyms - 1)
+	{
+		if (ft_strcmp(string_array[sorted_array[i]] + c + 2,
+					string_array[sorted_array[i + 1]] + c + 2) == 0 &&
+				string_array[sorted_array[i]][c] >
+				string_array[sorted_array[i + 1]][c])
+			swap(sorted_array + i, sorted_array + i + 1);
+		ft_putstr(string_array[sorted_array[i]]);
+		free(string_array[sorted_array[i]]);
+		++i;
+	}
+	ft_putstr(string_array[sorted_array[i]]);
+	free(string_array[sorted_array[i]]);
+	free(string_array);
 }

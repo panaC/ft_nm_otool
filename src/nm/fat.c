@@ -6,7 +6,7 @@
 /*   By: pleroux <pleroux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 19:14:45 by pleroux           #+#    #+#             */
-/*   Updated: 2019/10/22 17:45:14 by pleroux          ###   ########.fr       */
+/*   Updated: 2019/10/23 21:47:39 by pleroux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,18 @@
 #include "common.h"
 #include <ft_printf.h>
 
+void		test()
+{
+
+	return;
+}
+
 int			nm_fat(void *ptr)
 {
 	uint32_t			nb_fatarch;
 	struct fat_arch		*arch;
 
+	test();
 	if (SIZE(ptr, (void*)ptr + sizeof(struct fat_header)))
 	{
 		nb_fatarch = ((struct fat_header*)ptr)->nfat_arch;
