@@ -12,7 +12,7 @@
 
 #include "../../includes/libft.h"
 
-static size_t		ft_intlen_base(unsigned int n, int base)
+size_t		ft_intlen_base(unsigned int n, int base)
 {
 	size_t			i;
 
