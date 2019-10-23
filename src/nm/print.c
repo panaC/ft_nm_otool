@@ -6,7 +6,7 @@
 /*   By: pleroux <pleroux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/06 22:04:38 by pleroux           #+#    #+#             */
-/*   Updated: 2019/10/23 23:43:10 by pleroux          ###   ########.fr       */
+/*   Updated: 2019/10/23 23:51:28 by pleroux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,8 @@ void			nm_print(char **string_array, uint32_t *sorted_array,
 	{
 		if (ft_strcmp(string_array[sorted_array[i]] + c + 2,
 					string_array[sorted_array[i + 1]] + c + 2) == 0 &&
-				string_array[sorted_array[i]][c] >
-				string_array[sorted_array[i + 1]][c])
+				ft_strcmp(string_array[sorted_array[i]],
+				string_array[sorted_array[i + 1]]) > 0)
 			swap(sorted_array + i, sorted_array + i + 1);
 		ft_putstr(string_array[sorted_array[i]]);
 		free(string_array[sorted_array[i]]);
