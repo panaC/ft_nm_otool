@@ -6,7 +6,7 @@
 /*   By: pleroux <pleroux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/06 22:01:26 by pleroux           #+#    #+#             */
-/*   Updated: 2019/10/24 21:34:13 by pleroux          ###   ########.fr       */
+/*   Updated: 2019/10/24 22:26:22 by pleroux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,17 @@ void		sectname(t_segcmd *sc, int rz)
 	i = 0;
 	while (i < GET(sc, nsects))
 	{
-		s_array(GET(sc, segname), num_sec, 1);
-		ft_printf("%d %s %s\n", num_sec, GET(sect, segname), GET(sect, sectname));
+		/*
+		if (ft_strncmp(GET(sect, sectname), SECT_TEXT, 16) == 0||
+				ft_strncmp(GET(sect, sectname), SECT_DATA, 16) == 0 ||
+				ft_strncmp(GET(sect, sectname), SECT_BSS, 16) == 0 ||
+				ft_strncmp(GET(sect, sectname), SECT_COMMON, 16) == 0)
+			s_array(GET(sect, sectname), num_sec, 1);
+		else
+			s_array(GET(sect, segname), num_sec, 1);
+			*/
+		s_array(GET(sect, sectname), num_sec, 1);
+		//ft_printf("%d %s %s %s\n", num_sec, GET(sect, segname), GET(sect, sectname), s_array(NULL, num_sec, 0));
 		sect = (void*)sect + GES(sect);
 		++num_sec;
 		++i;
