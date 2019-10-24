@@ -6,7 +6,7 @@
 /*   By: pleroux <pleroux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/06 22:04:38 by pleroux           #+#    #+#             */
-/*   Updated: 2019/10/24 22:25:23 by pleroux          ###   ########.fr       */
+/*   Updated: 2019/10/24 23:46:18 by pleroux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,13 @@ static char		type_char(t_nlist *list)
 			s_array(NULL, GET(list, n_sect), 0))
 	{
 		//ft_printf("-> '%s':%d\n", s_array(NULL, GET(list, n_sect), 0), GET(list, n_sect));
-		if (ft_strncmp(s_array(NULL, GET(list, n_sect), 0), SECT_DATA, 16) == 0 ||
-				ft_strncmp(s_array(NULL, GET(list, n_sect), 0), SEG_DATA, 16) == 0)
+		if (!ft_strncmp(s_array(NULL, GET(list, n_sect), 0), SECT_DATA, 16) ||
+				!ft_strncmp(s_array(NULL, GET(list, n_sect), 0), SEG_DATA, 16))
 			return ('D');
-		if (ft_strncmp(s_array(NULL, GET(list, n_sect), 0), SECT_BSS, 16) == 0)
+		if (!ft_strncmp(s_array(NULL, GET(list, n_sect), 0), SECT_BSS, 16))
 			return ('B');
-		if (ft_strncmp(s_array(NULL, GET(list, n_sect), 0), SECT_TEXT, 16) == 0 ||
-				ft_strncmp(s_array(NULL, GET(list, n_sect), 0), SEG_TEXT, 16) == 0)
+		if (!ft_strncmp(s_array(NULL, GET(list, n_sect), 0), SECT_TEXT, 16) ||
+				!ft_strncmp(s_array(NULL, GET(list, n_sect), 0), SEG_TEXT, 16))
 			return ('T');
 		//if (ft_strncmp(s_array(NULL, GET(list, n_sect), 0), SECT_COMMON, 16) == 0)
 		//	return ('C');

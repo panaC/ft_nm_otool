@@ -6,13 +6,18 @@
 /*   By: pleroux <pleroux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 20:43:39 by pleroux           #+#    #+#             */
-/*   Updated: 2019/10/16 21:12:36 by pleroux          ###   ########.fr       */
+/*   Updated: 2019/10/24 23:44:32 by pleroux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdint.h>
 #include <libft.h>
 #include "common.h"
+
+void		test_nm(void)
+{
+	return;
+}
 
 int			print_arg(void)
 {
@@ -41,5 +46,6 @@ int			check_arg(char *arg)
 		else
 			return (print_arg());
 	}
+	test_nm();
 	return (0);
 }

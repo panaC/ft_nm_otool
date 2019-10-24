@@ -6,16 +6,25 @@
 /*   By: pleroux <pleroux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/06 22:04:10 by pleroux           #+#    #+#             */
-/*   Updated: 2019/10/23 21:48:07 by pleroux          ###   ########.fr       */
+/*   Updated: 2019/10/24 23:45:08 by pleroux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_printf.h>
 #include "common.h"
 
-static void		test()
+static void		test_nm(void)
 {
 	return ;
+}
+
+static void		reset_static_array(void)
+{
+	int		j;
+
+	j = -1;
+	while ((++j) < 0x100)
+		s_array(NULL, j, 1);
 }
 
 int			main(int argc, char **argv)
@@ -34,12 +43,13 @@ int			main(int argc, char **argv)
 	start = i;
 	while (i < argc)
 	{
+		reset_static_array();
 		if (argc - start > 1)
 			ft_printf("\n%s:\n", argv[i]);
 		if (open_file(argv[i], &nm_magic))
 			ret = EXIT_FAILLURE;
 		i++;
 	}
-	test();
+	test_nm();
 	return (ret);
 }
