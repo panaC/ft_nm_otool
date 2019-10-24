@@ -6,7 +6,7 @@
 /*   By: pleroux <pleroux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/06 22:01:26 by pleroux           #+#    #+#             */
-/*   Updated: 2019/10/24 17:12:46 by pleroux          ###   ########.fr       */
+/*   Updated: 2019/10/24 21:34:13 by pleroux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,12 @@ void		sectname(t_segcmd *sc, int rz)
 	{
 		return ((void)((num_sec = 0)));
 	}
-	sect = (t_sect*)((void*)sc + GET(sc, cmdsize));
+	sect = (t_sect*)((void*)sc + GES(sc));
 	i = 0;
 	while (i < GET(sc, nsects))
 	{
-		if (GET(sect, sectname)[0] && GET(sect, sectname)[0] != 25)
-			s_array(GET(sect, sectname), num_sec, 1);
-		else
-			s_array(GET(sc, segname), num_sec, 1);
-		sect = (void*)sect + sizeof(t_sect); //FIX
+		s_array(GET(sc, segname), num_sec, 1);
+		ft_printf("%d %s %s\n", num_sec, GET(sect, segname), GET(sect, sectname));
 		sect = (void*)sect + GES(sect);
 		++num_sec;
 		++i;
@@ -72,7 +69,7 @@ int			nm_macho_lc(void *ptr, struct load_command *lc)
 		{
 			if (lc->cmd == LC_SYMTAB)
 				ret = nm_macho_symtab(ptr, (struct symtab_command*)lc);
-			if (lc->cmd == LC_SEGMENT_64)
+			if (lc->cmd == LC_SEGMENT_64 || lc->cmd == LC_SEGMENT)
 				sectname((t_segcmd*)lc, 0);
 			lc = (struct load_command*)((void*)lc + lc->cmdsize);
 		}
