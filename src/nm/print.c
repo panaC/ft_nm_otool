@@ -6,7 +6,7 @@
 /*   By: pleroux <pleroux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/06 22:04:38 by pleroux           #+#    #+#             */
-/*   Updated: 2019/10/25 14:47:06 by pleroux          ###   ########.fr       */
+/*   Updated: 2019/10/25 17:25:09 by pleroux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,20 +83,23 @@ void			nm_print_buffer(void *ptr, char **string_array,
 	t_nlist_p	list;
 	uint32_t	nb_symb;
 	void		*stroff;
+	char		*tmp;
 
 	stroff = ptr + symtab->stroff;
 	nb_symb = symtab->nsyms;
 	list = (t_nlist_p)(struct nlist*)(ptr + symtab->symoff);
 	i = -1;
-	while ((++i) < nb_symb &&
-			SIZE(ptr, GETI(stroff + list, i, n_un.n_strx)))
+	while ((++i) < nb_symb && SIZE(ptr, GETI(stroff + list, i, n_un.n_strx)))
 	{
-		if (GETI(list, i, n_type) & N_STAB && !s_a_disp(UN))
+		if ((GETI(list, i, n_type) & N_STAB && !s_a_disp(UN)))
 			continue ;
-		print_32_64(&(string_array[i]),
-				GETI(list, i, n_value),
-				type_char_extern(GEI(t_nlist*, list, i)),
-				GETI(stroff + list, i, n_un.n_strx));
+		tmp = ft_strsub(GETI(stroff + list, i, n_un.n_strx), 0,
+					symtab->strsize - GETI(list, i, n_un.n_strx));
+		if (!tmp)
+			continue ;
+		print_32_64(&(string_array[i]), GETI(list, i, n_value),
+				type_char_extern(GEI(t_nlist*, list, i)), tmp);
+		free(tmp);
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: pierre <pleroux@student.42.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/27 19:48:56 by pierre            #+#    #+#             */
-/*   Updated: 2018/06/30 09:44:07 by pierre           ###   ########.fr       */
+/*   Updated: 2019/09/29 14:47:42 by pleroux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,11 @@ static t_string		ft_itoa_base_byte(const t_uint32 nb, const t_string b)
 
 t_string			ft_hexlify(const t_string str, size_t nb)
 {
-	t_string		s = str;
+	t_string		s;
 	t_string		stmp;
 	int				i;
 
+	s = str;
 	i = 0;
 	s = ft_strnew(nb * 2 + 1);
 	while (s && str && nb)

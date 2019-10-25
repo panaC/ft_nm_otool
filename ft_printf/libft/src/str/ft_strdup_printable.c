@@ -6,7 +6,7 @@
 /*   By: pierre <pleroux@student.42.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/28 20:45:25 by pierre            #+#    #+#             */
-/*   Updated: 2018/06/29 18:21:46 by pierre           ###   ########.fr       */
+/*   Updated: 2019/09/29 14:54:51 by pleroux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ static int			nb_prt(const t_string str)
 	}
 	return (nb_prt);
 }
-
 
 t_string			ft_strdup_printable(const t_string str)
 {

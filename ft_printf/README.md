@@ -1,6 +1,8 @@
 
 # ft_printf
 
+`git clone --recursive https://github.com/panaC/ft_printf.git`
+
 printf like from scratch without any C library
 
 This project has an aims of re-coding the Ainsi C printf from stdio.h

@@ -6,7 +6,7 @@
 /*   By: pleroux <pleroux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/24 16:56:34 by pleroux           #+#    #+#             */
-/*   Updated: 2018/06/29 18:18:29 by pierre           ###   ########.fr       */
+/*   Updated: 2018/05/04 21:03:17 by pleroux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ t_bool			mae_format(char **ret, char *s, t_format *t)
 		t->op = *s;
 		if (*s == 'd' || *s == 'D' || *s == 'i')
 			*ret = conv_format_d(t);
-		else if (*s == 's' || *s == 'S' || *s == 'a')
+		else if (*s == 's' || *s == 'S')
 			*ret = conv_format_s(t);
 		else if (*s == 'p')
 			*ret = conv_format_p(t);

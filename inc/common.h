@@ -6,7 +6,7 @@
 /*   By: pleroux <pleroux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/06 22:07:21 by pleroux           #+#    #+#             */
-/*   Updated: 2019/10/24 17:02:54 by pleroux          ###   ########.fr       */
+/*   Updated: 2019/10/25 17:13:07 by pleroux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # define EXIT_FAILLURE	1
 
 # define ABS(A)			((A < 0) ? (A * -1) : A)
-# define SIZE(A, B)		(ABS((int)(B - A)) <= s_size(UN))
+# define SIZE(A, B)		(ABS((long int)(B - A)) <= s_size(UN))
 # define GE(U)			((s_b64(UN)) ? (U->b64) : (U->b32))
 # define GD(U)			((s_b64(UN)) ? (U.b64) : (U.b32))
 # define GET(U, M)		((s_b64(UN)) ? (U->b64.M) : (U->b32.M))

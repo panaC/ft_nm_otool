@@ -6,7 +6,7 @@
 /*   By: pleroux <pleroux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/31 09:20:48 by pleroux           #+#    #+#             */
-/*   Updated: 2018/06/29 18:18:27 by pierre           ###   ########.fr       */
+/*   Updated: 2018/05/04 20:58:08 by pleroux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,24 +89,15 @@ char				*conv_format_s(t_format *t)
 {
 	char			*ret;
 	char			*tmp;
-	char			*str;
 
+	if (t->op == 'S')
+		t->length_type = code_l;
 	if (t->op == 'S' || (t->op == 's' && t->length_type == code_l))
 	{
-		t->length_type = code_l;
 		tmp = param_precision_s_unicode(t, cast_format_s(t));
 		ret = param_attribut_s(t, tmp);
 		t->val_ret = ft_strlen(ret);
 		ft_strdel(&tmp);
-	}
-	else if (t->op == 'a')
-	{
-		str = ft_strdup_printable((char*)cast_format_s(t));
-		tmp = param_precision_s(t, str);
-		ret = param_attribut_s(t, tmp);
-		t->val_ret = ft_strlen(ret);
-		ft_strdel(&tmp);
-		ft_strdel(&str);
 	}
 	else
 	{

@@ -6,7 +6,7 @@
 /*   By: pleroux <pleroux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/18 14:47:08 by pleroux           #+#    #+#             */
-/*   Updated: 2019/10/22 19:00:55 by pleroux          ###   ########.fr       */
+/*   Updated: 2019/10/25 15:52:50 by pleroux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,44 +36,45 @@ int			section(void *ptr, t_sect_p sect, uint32_t nsects)
 	i = 0;
 	while (i < nsects)
 	{
-		if (ft_strncmp(GETI(sect, i, sectname),
-				SECT_TEXT, ft_strlen(SECT_TEXT)) == 0)
+		if (!ft_strncmp(GETI(sect, i, sectname),
+				SECT_TEXT, 16) &&
+			!ft_strncmp(GETI(sect, i, segname),
+				SEG_TEXT, 16))
 		{
 			return (section_text(ptr, GETI(sect, i, offset),
 						GETI(sect, i, size), GETI(sect, i, addr)));
 		}
 		++i;
 	}
-	ft_printf("__text section missing\n");
 	return (EXIT_FAILURE);
 }
 
 int			otool_macho_lc(void *ptr, struct load_command *lc)
 {
 	uint32_t	nb_load_cmd;
+	int			ret;
 
+	ret = EXIT_FAILURE;
 	nb_load_cmd = s_b64(UN) ? ((struct mach_header_64*)ptr)->ncmds :
 		((struct mach_header*)ptr)->ncmds;
-	while (nb_load_cmd--)
+	while (nb_load_cmd-- && ret == EXIT_FAILURE)
 	{
 		if (SIZE(ptr, (void*)lc + lc->cmdsize))
 		{
-			if (lc->cmd == LC_SEGMENT_64 &&
-					ft_strcmp(GET(((t_segcmd*)lc), segname), SEG_TEXT) == 0)
-			{
-				return (section(ptr,
+			if (lc->cmd == LC_SEGMENT_64 || lc->cmd == LC_SEGMENT)
+				ret = (section(ptr,
 					(t_sect_p)(struct section*)((void*)lc + (s_b64(UN) ?
 						sizeof(struct segment_command_64) :
 						sizeof(struct segment_command))),
 					GET(((t_segcmd*)lc), nsects)));
-			}
 			lc = (struct load_command*)((void*)lc + lc->cmdsize);
 		}
 		else
 			break ;
 	}
-	ft_printf("truncated or malformed object (symtab_command)\n");
-	return (EXIT_FAILURE);
+	if (ret)
+		ft_printf("__TEXT __text section missing\n");
+	return (ret);
 }
 
 int			otool_macho(void *ptr)

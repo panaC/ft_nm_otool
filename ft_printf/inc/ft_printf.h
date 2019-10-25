@@ -6,7 +6,7 @@
 /*   By: pleroux <pleroux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/24 16:19:26 by pleroux           #+#    #+#             */
-/*   Updated: 2018/06/29 18:01:31 by pierre           ###   ########.fr       */
+/*   Updated: 2018/05/04 21:45:57 by pleroux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 # include <libft.h>
 # include <stdarg.h>
 
-# define STR_FORMAT_CHAR "sSapdDioOuUxXcC%"
+# define STR_FORMAT_CHAR "sSpdDioOuUxXcC%"
 
 typedef enum		e_length
 {
