@@ -6,7 +6,7 @@
 /*   By: pleroux <pleroux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/06 22:07:21 by pleroux           #+#    #+#             */
-/*   Updated: 2019/10/25 17:13:07 by pleroux          ###   ########.fr       */
+/*   Updated: 2019/10/25 19:30:26 by pleroux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,6 @@ void					sort_array(void *ptr, uint32_t *array,
 int						nm_fat(void*ptr);
 
 int						check_arg(char *arg);
-
 
 /*
 ** otool/

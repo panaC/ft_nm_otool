@@ -6,7 +6,7 @@
 /*   By: pleroux <pleroux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 16:54:22 by pleroux           #+#    #+#             */
-/*   Updated: 2019/10/22 17:48:05 by pleroux          ###   ########.fr       */
+/*   Updated: 2019/10/25 19:30:58 by pleroux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int			otool_fat(void *ptr)
 			else
 			{
 				ft_printf("truncated or malformed object (fat_arch)\n");
-				break;
+				break ;
 			}
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: pleroux <pleroux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/06 22:00:44 by pleroux           #+#    #+#             */
-/*   Updated: 2019/10/25 14:23:15 by pleroux          ###   ########.fr       */
+/*   Updated: 2019/10/25 19:30:39 by pleroux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,15 +54,3 @@ char		*s_array(char *data, uint8_t i, int mode)
 		return (value[i]);
 	return (NULL);
 }
-
-/*
-void		*s_ptr(void *ptr)
-{
-	static void		*value = NULL;
-
-	if (ptr == NULL)
-		return (value);
-	else
-		return ((value = ptr));
-}
-*/
