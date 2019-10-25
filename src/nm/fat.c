@@ -6,7 +6,7 @@
 /*   By: pleroux <pleroux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 19:14:45 by pleroux           #+#    #+#             */
-/*   Updated: 2019/10/24 23:44:40 by pleroux          ###   ########.fr       */
+/*   Updated: 2019/10/25 13:35:29 by pleroux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int			nm_fat(void *ptr)
 			else
 			{
 				ft_printf("truncated or malformed object (fat_arch)\n");
-				break;
+				break ;
 			}
 		}
 	}

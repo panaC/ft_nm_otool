@@ -6,7 +6,7 @@
 /*   By: pleroux <pleroux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/06 22:06:01 by pleroux           #+#    #+#             */
-/*   Updated: 2019/10/23 23:37:02 by pleroux          ###   ########.fr       */
+/*   Updated: 2019/10/25 13:36:06 by pleroux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static uint32_t		*init_sort_array(uint32_t *array, uint32_t n)
 	return (array);
 }
 
-int			swap(uint32_t *a, uint32_t *b)
+int					swap(uint32_t *a, uint32_t *b)
 {
 	uint32_t		tmp;
 

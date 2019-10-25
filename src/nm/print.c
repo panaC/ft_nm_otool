@@ -6,7 +6,7 @@
 /*   By: pleroux <pleroux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/06 22:04:38 by pleroux           #+#    #+#             */
-/*   Updated: 2019/10/24 23:46:18 by pleroux          ###   ########.fr       */
+/*   Updated: 2019/10/25 13:34:15 by pleroux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ static char		type_char(t_nlist *list)
 	if ((GET(list, n_type) & N_TYPE) == N_SECT &&
 			s_array(NULL, GET(list, n_sect), 0))
 	{
-		//ft_printf("-> '%s':%d\n", s_array(NULL, GET(list, n_sect), 0), GET(list, n_sect));
 		if (!ft_strncmp(s_array(NULL, GET(list, n_sect), 0), SECT_DATA, 16) ||
 				!ft_strncmp(s_array(NULL, GET(list, n_sect), 0), SEG_DATA, 16))
 			return ('D');
@@ -36,8 +35,6 @@ static char		type_char(t_nlist *list)
 		if (!ft_strncmp(s_array(NULL, GET(list, n_sect), 0), SECT_TEXT, 16) ||
 				!ft_strncmp(s_array(NULL, GET(list, n_sect), 0), SEG_TEXT, 16))
 			return ('T');
-		//if (ft_strncmp(s_array(NULL, GET(list, n_sect), 0), SECT_COMMON, 16) == 0)
-		//	return ('C');
 	}
 	return ('S');
 }
@@ -94,13 +91,6 @@ void			nm_print_buffer(void *ptr, char **string_array,
 	while ((++i) < nb_symb &&
 			SIZE(ptr, GETI(stroff + list, i, n_un.n_strx)))
 	{
-		/*
-		t_nlist *t = GEI(t_nlist*, list, i);
-		if ((GET(t, n_type) & N_TYPE) == N_SECT &&
-			s_array(NULL, GET(t, n_sect), 0))
-			ft_printf("%s %d\n", GETI(stroff + list, i, n_un.n_strx),
-				GET(t, n_sect));
-				*/
 		if (GETI(list, i, n_type) & N_STAB && !s_a_disp(UN))
 			continue ;
 		print_32_64(&(string_array[i]),

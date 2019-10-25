@@ -6,7 +6,7 @@
 /*   By: pleroux <pleroux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/06 22:04:10 by pleroux           #+#    #+#             */
-/*   Updated: 2019/10/24 23:45:08 by pleroux          ###   ########.fr       */
+/*   Updated: 2019/10/25 13:34:52 by pleroux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void		reset_static_array(void)
 		s_array(NULL, j, 1);
 }
 
-int			main(int argc, char **argv)
+int				main(int argc, char **argv)
 {
 	int		i;
 	int		start;

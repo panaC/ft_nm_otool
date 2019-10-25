@@ -6,7 +6,7 @@
 /*   By: pleroux <pleroux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 20:43:39 by pleroux           #+#    #+#             */
-/*   Updated: 2019/10/24 23:44:32 by pleroux          ###   ########.fr       */
+/*   Updated: 2019/10/25 13:35:41 by pleroux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 void		test_nm(void)
 {
-	return;
+	return ;
 }
 
 int			print_arg(void)
