@@ -6,7 +6,7 @@
 /*   By: pleroux <pleroux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/06 22:04:38 by pleroux           #+#    #+#             */
-/*   Updated: 2019/10/25 13:34:15 by pleroux          ###   ########.fr       */
+/*   Updated: 2019/10/25 14:47:06 by pleroux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void			print_32_64(char **string_ptr,
 {
 	if (s_b64(UN))
 	{
-		if (!nvalue)
+		if (c == 'U')
 			ft_sprintf(string_ptr, "%16c %c %s\n", ' ',
 					c,
 					name);
@@ -64,7 +64,7 @@ void			print_32_64(char **string_ptr,
 	}
 	else
 	{
-		if (!nvalue)
+		if (c == 'U')
 			ft_sprintf(string_ptr, "%8c %c %s\n", ' ',
 					c,
 					name);
