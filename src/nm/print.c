@@ -6,7 +6,7 @@
 /*   By: pleroux <pleroux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/06 22:04:38 by pleroux           #+#    #+#             */
-/*   Updated: 2019/10/25 17:25:09 by pleroux          ###   ########.fr       */
+/*   Updated: 2019/10/25 22:21:40 by pleroux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <ft_printf.h>
 #include "common.h"
 
-static char		type_char(t_nlist *list)
+char		type_char(t_nlist *list)
 {
 	if ((GET(list, n_type) & N_TYPE) == N_UNDF)
 		return ('U');
@@ -39,7 +39,7 @@ static char		type_char(t_nlist *list)
 	return ('S');
 }
 
-static char		type_char_extern(t_nlist *list)
+char		type_char_extern(t_nlist *list)
 {
 	if ((GET(list, n_type) & N_EXT) == 0)
 		return (ft_tolower(type_char(list)));

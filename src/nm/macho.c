@@ -6,7 +6,7 @@
 /*   By: pleroux <pleroux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/06 22:01:26 by pleroux           #+#    #+#             */
-/*   Updated: 2019/10/25 13:33:44 by pleroux          ###   ########.fr       */
+/*   Updated: 2019/10/25 22:22:12 by pleroux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void		sectname(t_segcmd *sc, int rz)
 
 	if (rz == 1)
 	{
-		return ((void)((num_sec = 0)));
+		return ((void)((num_sec = 1)));
 	}
 	sect = (t_sect*)((void*)sc + GES(sc));
 	i = 0;
